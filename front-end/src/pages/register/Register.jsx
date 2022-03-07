@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Container, Row, Col, Form, InputGroup } from "react-bootstrap";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import "./register.css";
 
 export default function Register() {
@@ -18,24 +19,26 @@ export default function Register() {
   return (
     <div>
       <Container fluid>
-        <Row className="register-page gy-5">
-            
+        <Row className="register-page">
           {/* <div className="register-page__image position-relative">
               <img src="./assets/images/signup-signin-dog.jpg" alt="register-image" />
             </div> */}
           <Col className="d-flex justify-content-center align-items-center">
             <Form className="register-page__register-form br-6">
               <div className="register-page__register-form--padding">
+                <h4>Welcome!</h4>
+                <h3>Sign up to</h3>
+                <p className="fw-b">Enjoy the moment.</p>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label className="fw-b">Email</Form.Label>
                   <Form.Control
                     className="br-6"
                     type="email"
                     placeholder="Enter your email"
                   />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>User name</Form.Label>
+                <Form.Group className="mb-3" controlId="formBasicUserName">
+                  <Form.Label className="fw-b">User name</Form.Label>
                   <Form.Control
                     type="email"
                     placeholder="Enter your user name"
@@ -43,7 +46,7 @@ export default function Register() {
                   />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>Password</Form.Label>
+                  <Form.Label className="fw-b">Password</Form.Label>
                   <InputGroup className="position-relative">
                     <Form.Control
                       type={`${showPassword ? "text" : "password"}`}
@@ -68,12 +71,8 @@ export default function Register() {
                     </div>
                   </InputGroup>
                 </Form.Group>
-                <Form.Group
-                  className="mb-3"
-                  controlId="formBasicCheckbox"
-                ></Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label>Confirm Password</Form.Label>
+                <Form.Group className="mb-3" controlId="confirmPassword">
+                  <Form.Label className="fw-b">Confirm Password</Form.Label>
                   <InputGroup className="position-relative">
                     <Form.Control
                       type={`${showPassword2 ? "text" : "password"}`}
@@ -106,10 +105,11 @@ export default function Register() {
                   variant="dark"
                   type="submit"
                   className="br-6"
-                  style={{ width: "100%", padding: "12px", marginTop: "12px" }}
+                  style={{ width: "100%", padding: "12px", margin: "12px 0 6px 0" }}
                 >
                   Register
                 </Button>
+                <p className="text-center">Already have an Account? <span className="fw-b"><Link to="/" className="link-default">Login</Link></span></p>
               </div>
             </Form>
           </Col>

@@ -1,32 +1,54 @@
 .br-6 {
-    border-radius: 6px !important;
+  border-radius: 6px !important;
 }
 
 .fw-b {
-    font-weight: bold;
+  font-weight: bold;
+}
+
+.rm-pd {
+  padding: 0 !important;
+}
+
+.position-top {
+  top: 0 !important;
+}
+
+.position-bottom {
+  bottom: 0 !important;
 }
 
 .text-center {
-    text-align: center;
+  text-align: center;
 }
 
 .link-default {
-    text-decoration: none;
-    color: #000;
+  text-decoration: none;
+  color: #000;
 }
 
 .link-default:hover {
-    color: #000;
-    opacity: 0.7;
+  color: #000;
+  opacity: 0.7;
+}
+
+
+.register-page--images {
+  position: relative;
+  width: 100%;
+  height: 100vh;
 }
 
 .register-page {
   /* background-color: #000; */
+  position: absolute;
   height: 100vh;
+  width: 100%;
+  top: 0;
 }
 
 .register-page__register-form {
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.8);
   min-height: 500px;
   max-height: 750px;
   width: 360px;
@@ -34,29 +56,22 @@
 }
 
 .register-page__register-form--padding {
-    padding: 24px;
+  padding: 24px;
 }
 
 .register-page__register-form input {
-    padding: 10px 0 10px 10px;
+  padding: 10px 0 10px 10px;
 }
 
 .eyes-btn:hover {
-    opacity: 0.8;
-    cursor: pointer;
+  opacity: 0.8;
+  cursor: pointer;
 }
 
 .register-page__register-form input:focus {
-    box-shadow: 0 0 6px #000 !important; 
+  box-shadow: 0 0 6px #000 !important;
 }
 
-.register-page__image {
-    width: 100%;
-    height: 100%;
-    padding: 0 !important;
-}
-
-.register-page__image img {
-    width: 100%;
-    height: 100%;
+.register-page__register-form button:hover {
+  opacity: 0.9;
 }

@@ -18,12 +18,11 @@ export default function Register() {
 
   return (
     <div>
-      <Container fluid>
+      <Container fluid className="rm-pd">
+        <img className="register-page--images" src="./assets/images/sleeping-dog-background.jpg" alt="register background" />
         <Row className="register-page">
-          {/* <div className="register-page__image position-relative">
-              <img src="./assets/images/signup-signin-dog.jpg" alt="register-image" />
-            </div> */}
-          <Col className="d-flex justify-content-center align-items-center">
+          <Col className="rm-pd"></Col>
+          <Col className="d-flex justify-content-center align-items-center rm-pd">
             <Form className="register-page__register-form br-6">
               <div className="register-page__register-form--padding">
                 <h4>Welcome!</h4>
@@ -97,19 +96,26 @@ export default function Register() {
                     </div>
                   </InputGroup>
                 </Form.Group>
-                <Form.Group
-                  className="mb-3"
-                  controlId="formBasicCheckbox"
-                ></Form.Group>
                 <Button
                   variant="dark"
                   type="submit"
-                  className="br-6"
-                  style={{ width: "100%", padding: "12px", margin: "12px 0 6px 0" }}
+                  className="br-6 btn"
+                  style={{
+                    width: "100%",
+                    padding: "12px",
+                    margin: "12px 0 6px 0",
+                  }}
                 >
                   Register
                 </Button>
-                <p className="text-center">Already have an Account? <span className="fw-b"><Link to="/" className="link-default">Login</Link></span></p>
+                <p className="text-center">
+                  Already have an Account?{" "}
+                  <span className="fw-b">
+                    <Link to="/" className="link-default">
+                      Login
+                    </Link>
+                  </span>
+                </p>
               </div>
             </Form>
           </Col>

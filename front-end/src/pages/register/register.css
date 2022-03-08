@@ -1,5 +1,5 @@
 .br-6 {
-  border-radius: 6px !important;
+  border-radius: 6px;
 }
 
 .fw-b {
@@ -9,6 +9,10 @@
 .rm-pd {
   padding: 0 !important;
 }
+
+/* .l-full-width {
+  width: 100%;
+} */
 
 .position-top {
   top: 0 !important;
@@ -32,18 +36,27 @@
   opacity: 0.7;
 }
 
-
-.register-page--images {
+.register-page__images--mb,
+.register-page__images--tl,
+.register-page__images {
   position: relative;
   width: 100%;
   height: 100vh;
 }
 
+.register-page__images--tl {
+  display: none;
+}
+
+.register-page__images--mb {
+  display: none;
+}
+
 .register-page {
   /* background-color: #000; */
   position: absolute;
+  width: 100vw;
   height: 100vh;
-  width: 100%;
   top: 0;
 }
 
@@ -53,6 +66,7 @@
   max-height: 750px;
   width: 360px;
   border: 1.5px solid #000;
+  border-radius: 6px;
 }
 
 .register-page__register-form--padding {
@@ -74,4 +88,115 @@
 
 .register-page__register-form button:hover {
   opacity: 0.9;
+}
+
+/*Tablet and Mobile*/
+@media (max-width: 63.9375em) {
+  .rm-col {
+    display: none;
+  }
+
+  .register-page__images--tl {
+    display: block;
+  }
+
+  .register-page__images {
+    display: none;
+  }
+
+  .rm-col {
+    display: none;
+  }
+
+  .rm-margin {
+    margin: 0;
+  }
+
+  .rm-br {
+    border-radius: 0px !important;
+  }
+
+  .register-page__register-form {
+    border: none;
+  }
+}
+
+/*Tablet*/
+@media (min-width: 46.25em) and (max-width: 63.9375em) {
+  .m-all-fsz {
+    font-size: 22px !important;
+  }
+
+  .m-fsz {
+    font-size: 26px !important;
+  }
+
+  /* .l-full-width {
+    display: none;
+  } */
+
+  .mt-12 {
+    margin-top: 12px;
+  }
+
+  .register-page {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+  }
+
+  .register-page__images--tl {
+    display: block;
+  }
+
+  .register-page__images {
+    display: none;
+  }
+
+  .register-page__images--mb {
+    display: none;
+  }
+
+  .register-page__register-form {
+    width: 400px;
+  }
+}
+
+/*Mobile*/
+@media (max-width: 46.1875em) {
+  .s-all-fsz {
+    font-size: 18px !important;
+  }
+
+  .s-fsz {
+    font-size: 20px !important;
+  }
+  
+  .register-page {
+    background-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .register-page__images--mb {
+    display: block;
+  }
+
+  .register-page__images--tl {
+    display: none;
+  }
+
+  .register-page__register-form {
+    width: 100%;
+    height: 100%;
+    border-radius: 0px;
+    background-color: rgba(255, 255, 255, 0);
+  }
+
+  .register-page__register-form input {
+    padding: 12px 0 12px 12px;
+  }
+  .register-page__register-form--padding {
+    padding: 24px 24px 0 24px;
+}
 }

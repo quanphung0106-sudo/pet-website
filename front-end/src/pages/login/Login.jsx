@@ -13,20 +13,22 @@ export default function Login() {
 
   return (
     <div>
-      <Container fluid className="rm-pd">
-        <img className="login-page--images" src="./assets/images/sleeping-dog-background.jpg" alt="login background" />
-        <Row className="login-page">
-          <Col className="rm-pd"></Col>
-          <Col className="d-flex justify-content-center align-items-center rm-pd">
-            <Form className="login-page__login-form br-6">
-              <div className="login-page__login-form--padding">
+      <Container fluid className="rm-pd l-all-fsz s-all-fsz" style={{height: "100vh"}}>
+        <img className="login-page__images--tl" src="./assets/images/dog-6.jpg" alt="login background tablet" />
+        <img className="login-page__images--mb" src="./assets/images/dog-3.jpg" alt="login background mobile" />
+        <img className="login-page__images" src="./assets/images/sleeping-dog-background.jpg" alt="login background pc" />
+        <Row className="login-page rm-margin">
+          <Col className="rm-pd rm-col"></Col>
+          <Col className="d-flex justify-content-center align-items-center rm-pd rm-margin">
+            <Form className="login-page__register-form rm-br">
+              <div className="login-page__register-form--padding">
                 <h4>Welcome back!</h4>
                 <h3>Sign in to</h3>
                 <p className="fw-b">Enjoy the moment.</p>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label className="fw-b">Email</Form.Label>
                   <Form.Control
-                    className="br-6"
+                    className="br-6 m-all-fsz s-all-fsz"
                     type="email"
                     placeholder="Enter your email"
                   />
@@ -37,7 +39,7 @@ export default function Login() {
                     <Form.Control
                       type={`${showPassword ? "text" : "password"}`}
                       placeholder="Enter your password"
-                      className="br-6"
+                      className="br-6 m-all-fsz s-all-fsz"
                     />
                     <div
                       className="position-absolute"
@@ -60,7 +62,7 @@ export default function Login() {
                 <Button
                   variant="dark"
                   type="submit"
-                  className="br-6 btn"
+                  className="br-6 btn m-all-fsz s-all-fsz"
                   style={{
                     width: "100%",
                     padding: "12px",

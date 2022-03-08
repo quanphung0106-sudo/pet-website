@@ -124,11 +124,15 @@
 /*Tablet*/
 @media (min-width: 46.25em) and (max-width: 63.9375em) {
   .m-all-fsz {
-    font-size: 22px !important;
+    font-size: 24px !important;
   }
 
   .m-fsz {
     font-size: 26px !important;
+  }
+
+  .m-fsz-22 {
+    font-size: 22px !important;
   }
 
   /* .l-full-width {

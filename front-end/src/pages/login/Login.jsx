@@ -71,25 +71,25 @@ export default function Login() {
                 >
                   Login
                 </Button>
-                <p className="text-center">
+                <p className="text-center m-fsz-22">
                   Don't have an Account?{" "}
                   <span className="fw-b">
-                    <Link to="/register" className="link-default">
-                      Register now!
+                    <Link to="/register" className="link-default m-fsz s-fsz">
+                      Register!
                     </Link>
                   </span>
                 </p>
-                <p className="text-center">- or -</p>
+                <p className="text-center m-fsz-22"> or -</p>
                 <Button
                   type="submit"
-                  className="br-6 btn"
+                  className="br-6 btn m-all-fsz s-all-fsz"
                   style={{
                     width: "100%",
                     padding: "11px",
                     backgroundColor: "#435994"
                   }}
                 >
-                <FaFacebook style={{lineHeight: "50px", fontSize: "25px", marginRight: "6px"}} />
+                <FaFacebook className="m-fsz s-fsz" style={{lineHeight: "50px", fontSize: "25px", marginRight: "6px"}} />
                   Login with Facebook
                 </Button>
               </div>

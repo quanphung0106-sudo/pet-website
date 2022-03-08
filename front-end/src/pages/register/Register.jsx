@@ -18,12 +18,14 @@ export default function Register() {
 
   return (
     <div>
-      <Container fluid className="rm-pd">
-        <img className="register-page--images" src="./assets/images/sleeping-dog-background.jpg" alt="register background" />
-        <Row className="register-page">
-          <Col className="rm-pd"></Col>
-          <Col className="d-flex justify-content-center align-items-center rm-pd">
-            <Form className="register-page__register-form br-6">
+      <Container fluid className="rm-pd l-all-fsz s-all-fsz" style={{height: "100vh"}}>
+        <img className="register-page__images--tl" src="./assets/images/dog-6.jpg" alt="register background tablet" />
+        <img className="register-page__images--mb" src="./assets/images/dog-3.jpg" alt="register background mobile" />
+        <img className="register-page__images" src="./assets/images/sleeping-dog-background.jpg" alt="register background pc" />
+        <Row className="register-page rm-margin">
+          <Col className="rm-pd rm-col"></Col>
+          <Col className="d-flex justify-content-center align-items-center rm-pd rm-margin">
+            <Form className="register-page__register-form rm-br">
               <div className="register-page__register-form--padding">
                 <h4>Welcome!</h4>
                 <h3>Sign up to</h3>
@@ -31,7 +33,7 @@ export default function Register() {
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label className="fw-b">Email</Form.Label>
                   <Form.Control
-                    className="br-6"
+                    className="br-6 m-all-fsz s-all-fsz"
                     type="email"
                     placeholder="Enter your email"
                   />
@@ -41,7 +43,7 @@ export default function Register() {
                   <Form.Control
                     type="email"
                     placeholder="Enter your user name"
-                    className="br-6"
+                    className="br-6 m-all-fsz s-all-fsz"
                   />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -50,7 +52,7 @@ export default function Register() {
                     <Form.Control
                       type={`${showPassword ? "text" : "password"}`}
                       placeholder="Enter your password"
-                      className="br-6"
+                      className="br-6 m-all-fsz s-all-fsz"
                     />
                     <div
                       className="position-absolute"
@@ -76,7 +78,7 @@ export default function Register() {
                     <Form.Control
                       type={`${showPassword2 ? "text" : "password"}`}
                       placeholder="Confirm your password"
-                      className="br-6"
+                      className="br-6 m-all-fsz s-all-fsz"
                     />
                     <div
                       className="position-absolute"
@@ -99,7 +101,7 @@ export default function Register() {
                 <Button
                   variant="dark"
                   type="submit"
-                  className="br-6 btn"
+                  className="br-6 btn m-all-fsz s-all-fsz"
                   style={{
                     width: "100%",
                     padding: "12px",
@@ -108,10 +110,10 @@ export default function Register() {
                 >
                   Register
                 </Button>
-                <p className="text-center">
+                <p className="text-center mt-12">
                   Already have an Account?{" "}
                   <span className="fw-b">
-                    <Link to="/" className="link-default">
+                    <Link to="/" className="link-default m-fsz s-fsz">
                       Login
                     </Link>
                   </span>

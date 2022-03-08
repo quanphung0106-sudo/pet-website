@@ -14,7 +14,7 @@ export default function Login() {
   return (
     <div>
       <Container fluid className="rm-pd">
-        <img className="login-page--images" src="./assets/images/sleeping-dog-background.jpg" alt="login background" />
+        <img className="login-page__images" src="./assets/images/sleeping-dog-background.jpg" alt="login background" />
         <Row className="login-page">
           <Col className="rm-pd"></Col>
           <Col className="d-flex justify-content-center align-items-center rm-pd">

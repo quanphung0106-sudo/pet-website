@@ -36,6 +36,13 @@
   opacity: 0.7;
 }
 
+.input-group:not(.has-validation) > .dropdown-toggle:nth-last-child(n + 3),
+.input-group:not(.has-validation)
+  > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu) {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
 .register-page__images--mb,
 .register-page__images--tl,
 .register-page__images {
@@ -80,6 +87,10 @@
 .eyes-btn:hover {
   opacity: 0.8;
   cursor: pointer;
+}
+
+.register-page__register-form input.error {
+  box-shadow: 0 0 8px red !important;
 }
 
 .register-page__register-form input:focus {
@@ -161,6 +172,8 @@
 
   .register-page__register-form {
     width: 400px;
+    min-height: 800px;
+    max-height: 880px;
   }
 }
 
@@ -173,7 +186,7 @@
   .s-fsz {
     font-size: 20px !important;
   }
-  
+
   .register-page {
     background-color: rgba(255, 255, 255, 0.6);
   }
@@ -198,5 +211,5 @@
   }
   .register-page__register-form--padding {
     padding: 24px 24px 0 24px;
-}
+  }
 }

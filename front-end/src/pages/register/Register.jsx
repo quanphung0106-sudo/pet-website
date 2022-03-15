@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Button, Container, Row, Col, Form, InputGroup } from "react-bootstrap";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -7,6 +7,12 @@ import "./register.css";
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
+  const [validatePassword, setValidatePassword] = useState(true);
+
+  const username = useRef();
+  const email = useRef();
+  const password = useRef();
+  const confirmPassword = useRef();
 
   const hideOrShowPassword = () => {
     setShowPassword(!showPassword);
@@ -16,43 +22,86 @@ export default function Register() {
     setShowPassword2(!showPassword2);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (password.current.value !== confirmPassword.current.value) {
+      setValidatePassword(false);
+    } else {
+      setValidatePassword(true);
+      const user = {
+        email: email.current.value,
+        username: username.current.value,
+        password: password.current.value,
+        confirmPassword: confirmPassword.current.value,
+      };
+      console.log(user);
+    }
+  };
+
   return (
     <div>
-      <Container fluid className="rm-pd l-all-fsz s-all-fsz" style={{height: "100vh"}}>
-        <img className="register-page__images--tl" src="./assets/images/dog-6.jpg" alt="register background tablet" />
-        <img className="register-page__images--mb" src="./assets/images/dog-3.jpg" alt="register background mobile" />
-        <img className="register-page__images" src="./assets/images/sleeping-dog-background.jpg" alt="register background pc" />
+      <Container
+        fluid
+        className="rm-pd l-all-fsz s-all-fsz"
+        style={{ height: "100vh" }}
+      >
+        <img
+          className="register-page__images--tl"
+          src="./assets/images/dog-6.jpg"
+          alt="register background tablet"
+        />
+        <img
+          className="register-page__images--mb"
+          src="./assets/images/dog-3.jpg"
+          alt="register background mobile"
+        />
+        <img
+          className="register-page__images"
+          src="./assets/images/sleeping-dog-background.jpg"
+          alt="register background pc"
+        />
         <Row className="register-page rm-margin">
           <Col className="rm-pd rm-col"></Col>
           <Col className="d-flex justify-content-center align-items-center rm-pd rm-margin">
-            <Form className="register-page__register-form rm-br">
+            <Form
+              onSubmit={handleSubmit}
+              className="register-page__register-form rm-br"
+            >
               <div className="register-page__register-form--padding">
-                <h4>Welcome!</h4>
-                <h3>Sign up to</h3>
-                <p className="fw-b">Enjoy the moment.</p>
+                <h4 className="fw-b m-fsz">Welcome!</h4>
+                <h3 className="fw-b m-fsz">Sign up to</h3>
+                <p className="fw-b m-fsz">Enjoy the moment.</p>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label className="fw-b">Email</Form.Label>
+                  <Form.Label className="fw-b m-all-fsz">Email</Form.Label>
                   <Form.Control
                     className="br-6 m-all-fsz s-all-fsz"
                     type="email"
                     placeholder="Enter your email"
+                    required
+                    ref={email}
                   />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicUserName">
-                  <Form.Label className="fw-b">User name</Form.Label>
+                  <Form.Label className="fw-b m-all-fsz">User name</Form.Label>
                   <Form.Control
-                    type="email"
+                    type="text"
                     placeholder="Enter your user name"
                     className="br-6 m-all-fsz s-all-fsz"
+                    required
+                    ref={username}
                   />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label className="fw-b">Password</Form.Label>
+                  <Form.Label className="fw-b m-all-fsz">Password</Form.Label>
                   <InputGroup className="position-relative">
                     <Form.Control
                       type={`${showPassword ? "text" : "password"}`}
                       placeholder="Enter your password"
-                      className="br-6 m-all-fsz s-all-fsz"
+                      className={`br-6 m-all-fsz s-all-fsz
+                      ${validatePassword ? "" : "error"}
+                      `}
+                      required
+                      ref={password}
                     />
                     <div
                       className="position-absolute"
@@ -73,12 +122,18 @@ export default function Register() {
                   </InputGroup>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="confirmPassword">
-                  <Form.Label className="fw-b">Confirm Password</Form.Label>
+                  <Form.Label className="fw-b m-all-fsz">
+                    Confirm Password
+                  </Form.Label>
                   <InputGroup className="position-relative">
                     <Form.Control
                       type={`${showPassword2 ? "text" : "password"}`}
                       placeholder="Confirm your password"
-                      className="br-6 m-all-fsz s-all-fsz"
+                      className={`br-6 m-all-fsz s-all-fsz
+                      ${validatePassword ? "" : "error"}
+                      `}
+                      required
+                      ref={confirmPassword}
                     />
                     <div
                       className="position-absolute"
@@ -97,6 +152,11 @@ export default function Register() {
                       )}
                     </div>
                   </InputGroup>
+                  <p className="m-all-fsz" style={{ color: "red", marginTop: "4px" }}>{`${
+                    validatePassword
+                      ? ""
+                      : "Password and confirm password does not match."
+                  }`}</p>
                 </Form.Group>
                 <Button
                   variant="dark"
@@ -110,7 +170,7 @@ export default function Register() {
                 >
                   Register
                 </Button>
-                <p className="text-center mt-12">
+                <p className="text-center mt-12 m-all-fsz">
                   Already have an Account?{" "}
                   <span className="fw-b">
                     <Link to="/" className="link-default m-fsz s-fsz">

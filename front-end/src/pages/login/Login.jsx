@@ -11,6 +11,10 @@ export default function Login() {
     setShowPassword(!showPassword);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  }
+
   return (
     <div>
       <Container fluid className="rm-pd l-all-fsz s-all-fsz" style={{height: "100vh"}}>
@@ -20,7 +24,7 @@ export default function Login() {
         <Row className="login-page rm-margin">
           <Col className="rm-pd rm-col"></Col>
           <Col className="d-flex justify-content-center align-items-center rm-pd rm-margin">
-            <Form className="login-page__register-form rm-br">
+            <Form onSubmit={handleSubmit} className="login-page__register-form rm-br">
               <div className="login-page__register-form--padding">
                 <h4>Welcome back!</h4>
                 <h3>Sign in to</h3>
@@ -31,6 +35,7 @@ export default function Login() {
                     className="br-6 m-all-fsz s-all-fsz"
                     type="email"
                     placeholder="Enter your email"
+                    required
                   />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -40,6 +45,7 @@ export default function Login() {
                       type={`${showPassword ? "text" : "password"}`}
                       placeholder="Enter your password"
                       className="br-6 m-all-fsz s-all-fsz"
+                      required
                     />
                     <div
                       className="position-absolute"

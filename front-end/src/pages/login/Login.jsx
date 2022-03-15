@@ -26,11 +26,11 @@ export default function Login() {
           <Col className="d-flex justify-content-center align-items-center rm-pd rm-margin">
             <Form onSubmit={handleSubmit} className="login-page__register-form rm-br">
               <div className="login-page__register-form--padding">
-                <h4>Welcome back!</h4>
-                <h3>Sign in to</h3>
-                <p className="fw-b">Enjoy the moment.</p>
+                <h4 className="fw-b m-fsz">Welcome back!</h4>
+                <h3 className="fw-b m-fsz">Sign in to</h3>
+                <p className="fw-b m-fsz">Enjoy the moment.</p>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label className="fw-b">Email</Form.Label>
+                  <Form.Label className="fw-b m-all-fsz">Email</Form.Label>
                   <Form.Control
                     className="br-6 m-all-fsz s-all-fsz"
                     type="email"
@@ -39,7 +39,7 @@ export default function Login() {
                   />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
-                  <Form.Label className="fw-b">Password</Form.Label>
+                  <Form.Label className="fw-b m-all-fsz">Password</Form.Label>
                   <InputGroup className="position-relative">
                     <Form.Control
                       type={`${showPassword ? "text" : "password"}`}
@@ -85,7 +85,7 @@ export default function Login() {
                     </Link>
                   </span>
                 </p>
-                <p className="text-center m-fsz-22"> or -</p>
+                <p className="text-center m-fsz-22 m-all-fsz"> or -</p>
                 <Button
                   type="submit"
                   className="br-6 btn m-all-fsz s-all-fsz"

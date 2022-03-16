@@ -1,0 +1,10 @@
+.left{
+    width: 75%;
+    position: relative;
+}
+.right{
+    width: 23%;
+    position: absolute;
+    right: 1%;
+    top: 0;
+}

@@ -3,6 +3,10 @@ p {
   color: #fff;
 }
 
+.carousel-content {
+  margin-top: 77px;
+}
+
 .carousel-content input {
   padding: 8px 84px;
   background-color: #30b5b2;

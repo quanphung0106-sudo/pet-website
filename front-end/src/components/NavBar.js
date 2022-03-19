@@ -13,7 +13,7 @@ const NavBar = () => {
               <img src={Logo} alt="Logo" className="navbar-brand logo" />
             </Link>
             <button
-              className="navbar-toggler"
+              className="navbar-toggler mb-navbar-button"
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#navbarSupportedContent"
@@ -21,7 +21,8 @@ const NavBar = () => {
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
-              <span className="navbar-toggler-icon"></span>
+              <span className="navbar-toggler-icon mb-navbar-icon"></span>
+              <i class="navbar-toggler-icon fa fa-align-justify mb-icon-navbar"></i>
             </button>
             <div
               className="collapse navbar-collapse"
@@ -70,7 +71,7 @@ const NavBar = () => {
               </ul>
               <ul id="nav-parents" className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item" id="nav-search">
-                  <Link to="/cart-love">
+                  <Link to="/">
                     <i className="fa fa-search cart-icon"></i>
                   </Link>
                   <div className="search">

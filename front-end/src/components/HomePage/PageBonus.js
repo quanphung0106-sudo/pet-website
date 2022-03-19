@@ -44,6 +44,7 @@ const PageBonus = () => {
             <Cart
               key={listdog.id}
               image={listdog.image}
+              type={listdog.type}
               title={listdog.title}
               price={listdog.price}
             />
@@ -61,6 +62,7 @@ const PageBonus = () => {
             <Cart
               key={listdog.id}
               image={listdog.image}
+              type={listdog.type}
               title={listdog.title}
               price={listdog.price}
             />
@@ -78,6 +80,7 @@ const PageBonus = () => {
             <Cart
               key={listdog.id}
               image={listdog.image}
+              type={listdog.type}
               title={listdog.title}
               price={listdog.price}
             />

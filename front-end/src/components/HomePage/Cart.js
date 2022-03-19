@@ -12,7 +12,7 @@ const Cart = (props) => {
           </Link>
         </div>
         <div className="cart-title">
-          <p className="cart-span">chó cảnh</p>
+          <p className="cart-span">{props.type}</p>
           <Link to="/cho" className="cart-name">
             {props.title}
           </Link>

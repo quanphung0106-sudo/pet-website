@@ -7,6 +7,7 @@ import "./assets/css/Cart.css";
 import "./assets/css/SeeMore.css";
 import "./assets/css/Banner.css";
 import "./assets/css/Information.css";
+import "./assets/css/Responsive.css";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 

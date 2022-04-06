@@ -70,14 +70,14 @@
 .register-page__register-form {
   background-color: rgba(255, 255, 255, 0.8);
   min-height: 500px;
-  max-height: 750px;
+  max-height: 720px;
   width: 360px;
   border: 1.5px solid #000;
   border-radius: 6px;
 }
 
 .register-page__register-form--padding {
-  padding: 24px;
+  padding: 18px;
 }
 
 .register-page__register-form input {
@@ -99,6 +99,37 @@
 
 .register-page__register-form button:hover {
   opacity: 0.9;
+}
+
+.error-message {
+  display: none;
+}
+
+input:invalid ~ p {
+  display: block;
+}
+
+.validate-input {
+  padding: 10px 0 10px 10px;
+  display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
 }
 
 /*Tablet and Mobile*/

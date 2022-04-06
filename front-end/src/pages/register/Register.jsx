@@ -69,24 +69,27 @@ export default function Register() {
             >
               <div className="register-page__register-form--padding">
                 <h4 className="fw-b m-fsz">Welcome!</h4>
-                <h3 className="fw-b m-fsz">Sign up to</h3>
-                <p className="fw-b m-fsz">Enjoy the moment.</p>
+                {/* <h3 className="fw-b m-fsz">Sign up to</h3>
+                <p className="fw-b m-fsz">Enjoy the moment.</p> */}
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label className="fw-b m-all-fsz">Email</Form.Label>
-                  <Form.Control
-                    className="br-6 m-all-fsz s-all-fsz"
+                  <input
+                    className="br-6 m-all-fsz s-all-fsz validate-input"
                     type="email"
                     placeholder="Enter your email"
                     required
                     ref={email}
                   />
+                  <p className="m-all-fsz error-message" style={{ color: "red", marginTop: "4px" }}>
+                    It should be a valid email address!
+                  </p>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicUserName">
-                  <Form.Label className="fw-b m-all-fsz">User name</Form.Label>
-                  <Form.Control
+                  <Form.Label className="fw-b m-all-fsz">Username</Form.Label>
+                  <input
                     type="text"
-                    placeholder="Enter your user name"
-                    className="br-6 m-all-fsz s-all-fsz"
+                    placeholder="Enter your username"
+                    className="br-6 m-all-fsz s-all-fsz validate-input"
                     required
                     ref={username}
                   />
@@ -94,16 +97,18 @@ export default function Register() {
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                   <Form.Label className="fw-b m-all-fsz">Password</Form.Label>
                   <InputGroup className="position-relative">
-                    <Form.Control
+                    <input
                       type={`${showPassword ? "text" : "password"}`}
                       placeholder="Enter your password"
-                      className={`br-6 m-all-fsz s-all-fsz
+                      className={`br-6 m-all-fsz s-all-fsz validate-input
                       ${validatePassword ? "" : "error"}
                       `}
                       required
                       ref={password}
+                      pattern = "^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{7,19}$"
                     />
                     <div
+                    
                       className="position-absolute"
                       style={{ right: "10px", zIndex: 10, padding: "11px" }}
                     >
@@ -119,6 +124,9 @@ export default function Register() {
                         />
                       )}
                     </div>
+                    <p className="m-all-fsz error-message" style={{ color: "red", marginTop: "4px" }}>
+                    Password should be 8-19 characters and include at least 1 special character!
+                  </p>
                   </InputGroup>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="confirmPassword">
@@ -126,10 +134,10 @@ export default function Register() {
                     Confirm Password
                   </Form.Label>
                   <InputGroup className="position-relative">
-                    <Form.Control
+                    <input
                       type={`${showPassword2 ? "text" : "password"}`}
                       placeholder="Confirm your password"
-                      className={`br-6 m-all-fsz s-all-fsz
+                      className={`br-6 m-all-fsz s-all-fsz validate-input
                       ${validatePassword ? "" : "error"}
                       `}
                       required

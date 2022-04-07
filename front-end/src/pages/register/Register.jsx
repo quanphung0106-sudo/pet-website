@@ -32,9 +32,27 @@ export default function Register() {
         email: email.current.value,
         username: username.current.value,
         password: password.current.value,
-        confirmPassword: confirmPassword.current.value,
       };
       console.log(user);
+    }
+  };
+
+  const removeEmailErrorMessage = () => {
+    var emailInputElement = document.querySelector('input[type="email"]');
+    var emailErrorElement =
+      emailInputElement.parentElement.querySelector(".error-message");
+    if (emailErrorElement) {
+      emailErrorElement.innerText = "It should be a valid email address!";
+    }
+  };
+
+  const removePasswordErrorMessage = () => {
+    var passwordInputElement = document.querySelector('input[type="password"]');
+    var passwordErrorElement =
+      passwordInputElement.parentElement.querySelector(".error-message");
+    if (passwordErrorElement) {
+      passwordErrorElement.innerText =
+        " Password should be 8-19 characters and include at least 1 special character!";
     }
   };
 
@@ -79,10 +97,12 @@ export default function Register() {
                     placeholder="Enter your email"
                     required
                     ref={email}
+                    onBlur={removeEmailErrorMessage}
                   />
-                  <p className="m-all-fsz error-message" style={{ color: "red", marginTop: "4px" }}>
-                    It should be a valid email address!
-                  </p>
+                  <p
+                    className="m-all-fsz error-message error-message-email"
+                    style={{ color: "red", marginTop: "4px" }}
+                  ></p>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicUserName">
                   <Form.Label className="fw-b m-all-fsz">Username</Form.Label>
@@ -105,10 +125,10 @@ export default function Register() {
                       `}
                       required
                       ref={password}
-                      pattern = "^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{7,19}$"
+                      onBlur={removePasswordErrorMessage}
+                      pattern="^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{7,19}$"
                     />
                     <div
-                    
                       className="position-absolute"
                       style={{ right: "10px", zIndex: 10, padding: "11px" }}
                     >
@@ -124,9 +144,10 @@ export default function Register() {
                         />
                       )}
                     </div>
-                    <p className="m-all-fsz error-message" style={{ color: "red", marginTop: "4px" }}>
-                    Password should be 8-19 characters and include at least 1 special character!
-                  </p>
+                    <p
+                      className="m-all-fsz error-message"
+                      style={{ color: "red", marginTop: "4px" }}
+                    ></p>
                   </InputGroup>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="confirmPassword">
@@ -160,7 +181,10 @@ export default function Register() {
                       )}
                     </div>
                   </InputGroup>
-                  <p className="m-all-fsz" style={{ color: "red", marginTop: "4px" }}>{`${
+                  <p
+                    className="m-all-fsz"
+                    style={{ color: "red", marginTop: "4px" }}
+                  >{`${
                     validatePassword
                       ? ""
                       : "Password and confirm password does not match."

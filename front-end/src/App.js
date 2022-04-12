@@ -1,15 +1,25 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
-import Register from "./pages/register/Register";
-import Login from "./pages/login/Login";
-import ProductInfor from "./pages/product_infor/ProductInfor"; 
+import "./assets/css/NavBar.css";
+import "./assets/css/Carousel.css";
+import "./assets/css/Bonus.css";
+import "./assets/css/Title.css";
+import "./assets/css/Cart.css";
+import "./assets/css/SeeMore.css";
+import "./assets/css/Banner.css";
+import "./assets/css/Information.css";
+import "./assets/css/Responsive.css";
+import "./assets/css/PageProductSingle/Product.css";
+import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
+import SingleProductPage from "./components/SingleProduct/SingleProductPage";
 
 function App() {
   return (
     <div>
-      <ProductInfor />
+      <NavBar />
+      <SingleProductPage/>
+      <Footer />
     </div>
-    
   );
 }
 

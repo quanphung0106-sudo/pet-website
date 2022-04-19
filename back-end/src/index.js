@@ -24,10 +24,6 @@ mongoose
 app.use(express.json());
 app.use(helmet());
 
-app.use("/api/users", (req, res) => {
-  res.send("Hello guys!");
-});
-
 //Routes init
 route(app);
 

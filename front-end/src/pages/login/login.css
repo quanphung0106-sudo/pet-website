@@ -26,15 +26,21 @@
   text-align: center;
 }
 
-.isFetchingModal {
+.openModal {
   position: absolute;
   background-color: rgba(102, 102, 102, 0.326);
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 100;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #fff;
 }
+
 
 .link-default {
   text-decoration: none;

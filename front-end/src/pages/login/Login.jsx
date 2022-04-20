@@ -5,13 +5,14 @@ import { Link } from "react-router-dom";
 import "./login.css";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
+import { CircularProgress } from "@mui/material";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   const email = useRef();
   const password = useRef();
-  const { dispatch, isFetching } = useContext(AuthContext);
+  const { user, dispatch, isFetching } = useContext(AuthContext);
   const hideOrShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -22,18 +23,20 @@ export default function Login() {
       email: email.current.value,
       password: password.current.value,
     };
-    dispatch({ type: "LOGIN_START" })
+    dispatch({ type: "LOGIN_START" });
     try {
-      const res = await axios.post('http://localhost:8800/api/auth/login', userInfo);
-      dispatch({ type: "LOGIN_SUCCESS" , payload: res.data});
-      console.log(userInfo);
+      const res = await axios.post(
+        "http://localhost:8800/api/auth/login",
+        userInfo
+      );
+      dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+      // console.log(userInfo);
     } catch (err) {
-      dispatch({ type: "LOGIN_FAILURE" , payload: err});
+      dispatch({ type: "LOGIN_FAILURE", payload: err });
     }
   };
-
   return (
-    <div style={{position: 'relative'}}>
+    <div style={{ position: "relative" }}>
       <Container
         fluid
         className="rm-pd l-all-fsz s-all-fsz"
@@ -148,7 +151,11 @@ export default function Login() {
           </Col>
         </Row>
       </Container>
-      <div className="isFetchingModal"></div>
-    </div>
+        <div className={isFetching ? 'openModal': ''}>
+          {isFetching && `Wait a second...`}
+          {isFetching &&
+            <CircularProgress style={{ marginLeft: 5 }} />}
+        </div>
+      </div>
   );
 }

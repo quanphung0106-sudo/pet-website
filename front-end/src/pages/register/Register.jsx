@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Button, Container, Row, Col, Form, InputGroup } from "react-bootstrap";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./register.css";
 import axios from "axios";
 
@@ -14,6 +14,7 @@ export default function Register() {
   const email = useRef();
   const password = useRef();
   const confirmPassword = useRef();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +29,7 @@ export default function Register() {
       };
       try {
         await axios.post("http://localhost:8800/api/auth/register", user);
-        console.log(user);
+        navigate("/login");
       } catch (err) {
         console.log(err);
       }

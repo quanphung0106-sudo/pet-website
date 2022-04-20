@@ -3,6 +3,7 @@ import { Button, Container, Row, Col, Form, InputGroup } from "react-bootstrap";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "./register.css";
+import axios from "axios";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
@@ -14,15 +15,7 @@ export default function Register() {
   const password = useRef();
   const confirmPassword = useRef();
 
-  const hideOrShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const hideOrShowPassword2 = () => {
-    setShowPassword2(!showPassword2);
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (password.current.value !== confirmPassword.current.value) {
       setValidatePassword(false);
@@ -33,8 +26,21 @@ export default function Register() {
         username: username.current.value,
         password: password.current.value,
       };
-      console.log(user);
+      try {
+        await axios.post("http://localhost:8800/api/auth/register", user);
+        console.log(user);
+      } catch (err) {
+        console.log(err);
+      }
     }
+  };
+
+  const hideOrShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const hideOrShowPassword2 = () => {
+    setShowPassword2(!showPassword2);
   };
 
   const removeEmailErrorMessage = () => {
@@ -205,7 +211,7 @@ export default function Register() {
                 <p className="text-center mt-12 m-all-fsz">
                   Already have an Account?{" "}
                   <span className="fw-b">
-                    <Link to="/" className="link-default m-fsz s-fsz">
+                    <Link to="/login" className="link-default m-fsz s-fsz">
                       Login
                     </Link>
                   </span>

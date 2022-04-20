@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const route = require("./routes/index");
-
+const cors = require('cors');
 dotenv.config();
 
 mongoose
@@ -21,6 +21,7 @@ mongoose
   });
 
 //midleware
+app.use(cors({ credentials: true, origin: true }));
 app.use(express.json());
 app.use(helmet());
 

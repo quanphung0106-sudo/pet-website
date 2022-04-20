@@ -26,6 +26,16 @@
   text-align: center;
 }
 
+.isFetchingModal {
+  position: absolute;
+  background-color: rgba(102, 102, 102, 0.326);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+}
+
 .link-default {
   text-decoration: none;
   color: #000;

@@ -1,30 +1,66 @@
-import React, { useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Button, Container, Row, Col, Form, InputGroup } from "react-bootstrap";
 import { FaEyeSlash, FaEye, FaFacebook } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import "./login.css";
+import axios from "axios";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
+  const email = useRef();
+  const password = useRef();
+  const { dispatch, isFetching } = useContext(AuthContext);
   const hideOrShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  }
+    const userInfo = {
+      email: email.current.value,
+      password: password.current.value,
+    };
+    dispatch({ type: "LOGIN_START" })
+    try {
+      const res = await axios.post('http://localhost:8800/api/auth/login', userInfo);
+      dispatch({ type: "LOGIN_SUCCESS" , payload: res.data});
+      console.log(userInfo);
+    } catch (err) {
+      dispatch({ type: "LOGIN_FAILURE" , payload: err});
+    }
+  };
 
   return (
-    <div>
-      <Container fluid className="rm-pd l-all-fsz s-all-fsz" style={{height: "100vh"}}>
-        <img className="login-page__images--tl" src="./assets/images/dog-6.jpg" alt="login background tablet" />
-        <img className="login-page__images--mb" src="./assets/images/dog-3.jpg" alt="login background mobile" />
-        <img className="login-page__images" src="./assets/images/sleeping-dog-background.jpg" alt="login background pc" />
+    <div style={{position: 'relative'}}>
+      <Container
+        fluid
+        className="rm-pd l-all-fsz s-all-fsz"
+        style={{ height: "100vh" }}
+      >
+        <img
+          className="login-page__images--tl"
+          src="./assets/images/dog-6.jpg"
+          alt="login background tablet"
+        />
+        <img
+          className="login-page__images--mb"
+          src="./assets/images/dog-3.jpg"
+          alt="login background mobile"
+        />
+        <img
+          className="login-page__images"
+          src="./assets/images/sleeping-dog-background.jpg"
+          alt="login background pc"
+        />
         <Row className="login-page rm-margin">
           <Col className="rm-pd rm-col"></Col>
           <Col className="d-flex justify-content-center align-items-center rm-pd rm-margin">
-            <Form onSubmit={handleSubmit} className="login-page__register-form rm-br">
+            <Form
+              onSubmit={handleSubmit}
+              className="login-page__register-form rm-br"
+            >
               <div className="login-page__register-form--padding">
                 <h4 className="fw-b m-fsz">Welcome back!</h4>
                 <h3 className="fw-b m-fsz">Sign in to</h3>
@@ -36,6 +72,7 @@ export default function Login() {
                     type="email"
                     placeholder="Enter your email"
                     required
+                    ref={email}
                   />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -46,6 +83,7 @@ export default function Login() {
                       placeholder="Enter your password"
                       className="br-6 m-all-fsz s-all-fsz"
                       required
+                      ref={password}
                     />
                     <div
                       className="position-absolute"
@@ -92,10 +130,17 @@ export default function Login() {
                   style={{
                     width: "100%",
                     padding: "11px",
-                    backgroundColor: "#435994"
+                    backgroundColor: "#435994",
                   }}
                 >
-                <FaFacebook className="m-fsz s-fsz" style={{lineHeight: "50px", fontSize: "25px", marginRight: "6px"}} />
+                  <FaFacebook
+                    className="m-fsz s-fsz"
+                    style={{
+                      lineHeight: "50px",
+                      fontSize: "25px",
+                      marginRight: "6px",
+                    }}
+                  />
                   Login with Facebook
                 </Button>
               </div>
@@ -103,6 +148,7 @@ export default function Login() {
           </Col>
         </Row>
       </Container>
+      <div className="isFetchingModal"></div>
     </div>
   );
 }

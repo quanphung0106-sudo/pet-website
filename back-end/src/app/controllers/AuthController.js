@@ -15,6 +15,22 @@ const createUser = async (req, res) => {
   }
 };
 
+//[POST]: /api/auth/login
+const userLogin = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    !user && res.status(404).json("User not found!");
+
+    const validPassword = await User.findOne({ password: req.body.password });
+    !validPassword && res.status(404).json("Wrong password");
+
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 module.exports = {
   createUser,
+  userLogin,
 };

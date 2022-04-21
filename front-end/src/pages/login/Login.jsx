@@ -10,7 +10,7 @@ import { CircularProgress } from "@mui/material";
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
-  const email = useRef();
+  const username = useRef();
   const password = useRef();
   const { user, dispatch, isFetching } = useContext(AuthContext);
   const hideOrShowPassword = () => {
@@ -20,7 +20,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const userInfo = {
-      email: email.current.value,
+      username: username.current.value,
       password: password.current.value,
     };
     dispatch({ type: "LOGIN_START" });
@@ -54,7 +54,7 @@ export default function Login() {
         />
         <img
           className="login-page__images"
-          src="./assets/images/sleeping-dog-background.jpg"
+          src="./assets/images/background-signin-signup.jpg"
           alt="login background pc"
         />
         <Row className="login-page rm-margin">
@@ -69,13 +69,13 @@ export default function Login() {
                 <h3 className="fw-b m-fsz">Sign in to</h3>
                 <p className="fw-b m-fsz">Enjoy the moment.</p>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label className="fw-b m-all-fsz">Email</Form.Label>
+                  <Form.Label className="fw-b m-all-fsz">Username</Form.Label>
                   <Form.Control
                     className="br-6 m-all-fsz s-all-fsz"
-                    type="email"
-                    placeholder="Enter your email"
+                    type="text"
+                    placeholder="Enter your username"
                     required
-                    ref={email}
+                    ref={username}
                   />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -114,6 +114,8 @@ export default function Login() {
                     width: "100%",
                     padding: "12px",
                     margin: "12px 0 6px 0",
+                    backgroundColor: '#c38161',
+                    border: 'none'
                   }}
                 >
                   Login
@@ -121,7 +123,7 @@ export default function Login() {
                 <p className="text-center m-fsz-22">
                   Don't have an Account?{" "}
                   <span className="fw-b">
-                    <Link to="/register" className="link-default m-fsz s-fsz">
+                    <Link to="/register" className="link-default m-fsz s-fsz" style={{color: '#c38161'}}>
                       Register!
                     </Link>
                   </span>

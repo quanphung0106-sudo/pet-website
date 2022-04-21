@@ -18,7 +18,7 @@ const createUser = async (req, res) => {
 //[POST]: /api/auth/login
 const userLogin = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ username: req.body.username });
     !user && res.status(404).json("User not found!");
 
     const validPassword = await User.findOne({ password: req.body.password });

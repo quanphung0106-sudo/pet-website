@@ -1,20 +1,30 @@
 import React, { useState, useRef } from "react";
 import { Button, Container, Row, Col, Form, InputGroup } from "react-bootstrap";
-import { FaEyeSlash, FaEye } from "react-icons/fa";
+import { FaEyeSlash, FaEye, FaDoorClosed } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import "./register.css";
 import axios from "axios";
+import RegisterModalError from "../../components/registerModalError/RegisterModalError";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const [validatePassword, setValidatePassword] = useState(true);
+  const [signupFailure, setSignupFailure] = useState(false);
 
   const username = useRef();
   const email = useRef();
   const password = useRef();
   const confirmPassword = useRef();
   const navigate = useNavigate();
+
+  const registerModalError = (err) => {
+    if (err) {
+      setSignupFailure(true);
+    } else {
+      setSignupFailure(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,7 +41,7 @@ export default function Register() {
         await axios.post("http://localhost:8800/api/auth/register", user);
         navigate("/login");
       } catch (err) {
-        console.log(err);
+        registerModalError(err);
       }
     }
   };
@@ -82,7 +92,7 @@ export default function Register() {
         />
         <img
           className="register-page__images"
-          src="./assets/images/sleeping-dog-background.jpg"
+          src="./assets/images/background-signin-signup.jpg"
           alt="register background pc"
         />
         <Row className="register-page rm-margin">
@@ -93,9 +103,22 @@ export default function Register() {
               className="register-page__register-form rm-br"
             >
               <div className="register-page__register-form--padding">
-                <h4 className="fw-b m-fsz">Welcome!</h4>
+                <h4 className="fw-b m-fsz" style={{ marginBottom: 15 }}>
+                  Welcome!
+                </h4>
                 {/* <h3 className="fw-b m-fsz">Sign up to</h3>
                 <p className="fw-b m-fsz">Enjoy the moment.</p> */}
+
+                <Form.Group className="mb-3" controlId="formBasicUserName">
+                  <Form.Label className="fw-b m-all-fsz">Username</Form.Label>
+                  <input
+                    type="text"
+                    placeholder="Enter your username"
+                    className="br-6 m-all-fsz s-all-fsz validate-input"
+                    required
+                    ref={username}
+                  />
+                </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label className="fw-b m-all-fsz">Email</Form.Label>
                   <input
@@ -110,16 +133,6 @@ export default function Register() {
                     className="m-all-fsz error-message error-message-email"
                     style={{ color: "red", marginTop: "4px" }}
                   ></p>
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicUserName">
-                  <Form.Label className="fw-b m-all-fsz">Username</Form.Label>
-                  <input
-                    type="text"
-                    placeholder="Enter your username"
-                    className="br-6 m-all-fsz s-all-fsz validate-input"
-                    required
-                    ref={username}
-                  />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                   <Form.Label className="fw-b m-all-fsz">Password</Form.Label>
@@ -205,6 +218,8 @@ export default function Register() {
                     width: "100%",
                     padding: "12px",
                     margin: "12px 0 6px 0",
+                    backgroundColor: "#c38161",
+                    border: "none",
                   }}
                 >
                   Register
@@ -212,7 +227,11 @@ export default function Register() {
                 <p className="text-center mt-12 m-all-fsz">
                   Already have an Account?{" "}
                   <span className="fw-b">
-                    <Link to="/login" className="link-default m-fsz s-fsz">
+                    <Link
+                      to="/login"
+                      className="link-default m-fsz s-fsz"
+                      style={{ color: "#c38161" }}
+                    >
                       Login
                     </Link>
                   </span>
@@ -222,6 +241,12 @@ export default function Register() {
           </Col>
         </Row>
       </Container>
+      {signupFailure && (
+        <RegisterModalError
+          signupFailure={signupFailure}
+          setSignupFailure={setSignupFailure}
+        />
+      )}
     </div>
   );
 }

@@ -156,7 +156,7 @@ export default function Login() {
         <div className={isFetching ? 'openModal': ''}>
           {isFetching && `Wait a second...`}
           {isFetching &&
-            <CircularProgress style={{ marginLeft: 5 }} />}
+            <CircularProgress style={{ color: 'white', marginLeft: 5 }} />}
         </div>
       </div>
   );

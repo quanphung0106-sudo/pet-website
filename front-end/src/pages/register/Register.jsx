@@ -17,6 +17,12 @@ export default function Register() {
   const password = useRef();
   const confirmPassword = useRef();
   const navigate = useNavigate();
+  //allow "_ -, number, letter and no allow whitespace,@,$..."
+  const usernameRegex = /^(?=.*[a-z])[a-z1-9_-]+$/i;
+  const emailRegex =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const passwordRegex =
+    /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,19}$/;
 
   const registerModalError = (err) => {
     if (err) {
@@ -55,21 +61,50 @@ export default function Register() {
   };
 
   const removeEmailErrorMessage = () => {
-    var emailInputElement = document.querySelector('input[type="email"]');
-    var emailErrorElement =
-      emailInputElement.parentElement.querySelector(".error-message");
-    if (emailErrorElement) {
+    const emailInputElement = document.querySelector('input[type="email"]');
+    const emailErrorElement =
+      emailInputElement.parentElement.querySelector("p");
+    const checkValue = emailInputElement.value;
+    if (!checkValue || !checkValue.match(emailRegex)) {
+      emailErrorElement.classList.add("error-message");
       emailErrorElement.innerText = "It should be a valid email address!";
+    } else {
+      emailErrorElement.classList.remove("error-message");
+      emailErrorElement.innerText = "";
+    }
+  };
+
+  const removeUsernameErrorMessage = () => {
+    const usernameInputElement = document.querySelector(
+      ".validate-input-username"
+    );
+    const usernameErrorElement =
+      usernameInputElement.parentElement.querySelector("p");
+    const checkValue = usernameInputElement.value;
+    if (!checkValue || !checkValue.match(usernameRegex)) {
+      usernameErrorElement.classList.add("error-message");
+      usernameErrorElement.innerText =
+        "Don't allow space or special characters!";
+    } else {
+      usernameErrorElement.classList.remove("error-message");
+      usernameErrorElement.innerText = "";
     }
   };
 
   const removePasswordErrorMessage = () => {
-    var passwordInputElement = document.querySelector('input[type="password"]');
-    var passwordErrorElement =
-      passwordInputElement.parentElement.querySelector(".error-message");
-    if (passwordErrorElement) {
+    const passwordInputElement = document.querySelector(
+      ".validate-input-password"
+    );
+    const passwordErrorElement =
+      passwordInputElement.parentElement.querySelector("p");
+    const checkValue = passwordInputElement.value;
+    if (!checkValue || !checkValue.match(passwordRegex)) {
+      passwordErrorElement.classList.add("error-message");
       passwordErrorElement.innerText =
-        " Password should be 8-19 characters and include at least 1 special character!";
+        "Password should be 8-19 characters and include at least 1 special character!";
+    } else {
+      passwordErrorElement.classList.remove("error-message");
+      passwordErrorElement.innerText = "";
     }
   };
 
@@ -99,6 +134,7 @@ export default function Register() {
           <Col className="rm-pd rm-col"></Col>
           <Col className="d-flex justify-content-center align-items-center rm-pd rm-margin">
             <Form
+              noValidate 
               onSubmit={handleSubmit}
               className="register-page__register-form rm-br"
             >
@@ -114,10 +150,20 @@ export default function Register() {
                   <input
                     type="text"
                     placeholder="Enter your username"
-                    className="br-6 m-all-fsz s-all-fsz validate-input"
+                    className="br-6 m-all-fsz s-all-fsz validate-input validate-input-username"
                     required
                     ref={username}
+                    onInvalid={(e) =>
+                      e.target.setCustomValidity('Remove')
+                    }
+                    onInput={(e) => e.target.setCustomValidity('')}
+                    onBlur={removeUsernameErrorMessage}
+                    pattern={usernameRegex}
                   />
+                  <p
+                    className="m-all-fsz error-message-username"
+                    style={{ color: "red", marginTop: "4px" }}
+                  ></p>
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label className="fw-b m-all-fsz">Email</Form.Label>
@@ -128,9 +174,10 @@ export default function Register() {
                     required
                     ref={email}
                     onBlur={removeEmailErrorMessage}
+                    pattern={emailRegex}
                   />
                   <p
-                    className="m-all-fsz error-message error-message-email"
+                    className="m-all-fsz error-message-email"
                     style={{ color: "red", marginTop: "4px" }}
                   ></p>
                 </Form.Group>
@@ -140,13 +187,13 @@ export default function Register() {
                     <input
                       type={`${showPassword ? "text" : "password"}`}
                       placeholder="Enter your password"
-                      className={`br-6 m-all-fsz s-all-fsz validate-input
+                      className={`br-6 m-all-fsz s-all-fsz validate-input validate-input-password
                       ${validatePassword ? "" : "error"}
                       `}
                       required
                       ref={password}
                       onBlur={removePasswordErrorMessage}
-                      pattern="^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+])[A-Za-z\d][A-Za-z\d!@#$%^&*()_+]{7,19}$"
+                      pattern={passwordRegex}
                     />
                     <div
                       className="position-absolute"

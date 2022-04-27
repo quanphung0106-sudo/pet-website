@@ -5,3 +5,7 @@
   margin: 0;
   box-sizing: border-box;
 }
+
+.hoverButton:hover {
+  opacity: 0.9;
+}

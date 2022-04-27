@@ -81,7 +81,7 @@
   min-height: 500px;
   max-height: 750px;
   width: 360px;
-  border: 1.5px solid #000;
+  /* border: 1.5px solid #000; */
   border-radius: 6px;
 }
 
@@ -104,6 +104,24 @@
 
 .login-page__register-form button:hover {
   opacity: 0.9;
+}
+
+.login-page__register-form--bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-page__register-form--bottomIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.social-icon:hover {
+  opacity: 0.8;
+  cursor: pointer;
 }
 
 /*Tablet and Mobile*/

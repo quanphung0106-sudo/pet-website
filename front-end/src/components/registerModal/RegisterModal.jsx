@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import "./registerModalError.css";
+import "./registerModal.css";
 
-const RegisterModalError = (props) => {
+const RegisterModal = (props) => {
   const [show, setShow] = useState(true);
   const handleClose = () => {
     setShow(false);
@@ -12,24 +12,19 @@ const RegisterModalError = (props) => {
     <>
       <Modal className="errorModal" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Oops!!!</Modal.Title>
+          <Modal.Title>Welcome!!</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          Có vẻ như <span>tên tài khoản</span> hoặc <span>email</span> đã tồn
-          tại! Vui lòng sử dụng <span>tên tài khoản</span> hoặc{" "}
-          <span>email</span> khác.
-        </Modal.Body>
+        <Modal.Body>Chúng tôi đã gửi mail cho bạn. Xác nhận đê!</Modal.Body>
         <Modal.Footer>
           <Button
             className="hoverButton"
             style={{
-              backgroundColor: "#c38161",
               border: "none",
             }}
-            variant="secondary"
+            variant="primary"
             onClick={() => {
               setShow(false);
-              props.setSignupFailure(!props.signupFailure);
+              props.setAuthEmail(!props.authEmail);
             }}
           >
             Close
@@ -40,4 +35,4 @@ const RegisterModalError = (props) => {
   );
 };
 
-export default RegisterModalError;
+export default RegisterModal;

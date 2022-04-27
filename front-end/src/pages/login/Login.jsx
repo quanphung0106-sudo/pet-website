@@ -6,6 +6,8 @@ import "./login.css";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import { CircularProgress } from "@mui/material";
+import GoogleIcon from "@mui/icons-material/Google";
+// import GitHubIcon from "@mui/icons-material/GitHub";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -35,6 +37,17 @@ export default function Login() {
       dispatch({ type: "LOGIN_FAILURE", payload: err });
     }
   };
+
+  const google = () => {
+    //axios.get("http://localhost:8800/api/auth/google");
+
+    window.open("http://localhost:8800/api/auth/google", "_self");
+    console.log("My User: ", user);
+    if (user) {
+      console.log("My User: ", user);
+    }
+  };
+
   return (
     <div style={{ position: "relative" }}>
       <Container
@@ -66,8 +79,8 @@ export default function Login() {
             >
               <div className="login-page__register-form--padding">
                 <h4 className="fw-b m-fsz">Welcome back!</h4>
-                <h3 className="fw-b m-fsz">Sign in to</h3>
-                <p className="fw-b m-fsz">Enjoy the moment.</p>
+                {/* <h3 className="fw-b m-fsz">Sign in to</h3>
+                <p className="fw-b m-fsz">Enjoy the moment.</p> */}
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label className="fw-b m-all-fsz">Username</Form.Label>
                   <Form.Control
@@ -114,50 +127,82 @@ export default function Login() {
                     width: "100%",
                     padding: "12px",
                     margin: "12px 0 6px 0",
-                    backgroundColor: '#c38161',
-                    border: 'none'
+                    backgroundColor: "#c38161",
+                    border: "none",
                   }}
                 >
                   Login
                 </Button>
-                <p className="text-center m-fsz-22">
-                  Don't have an Account?{" "}
-                  <span className="fw-b">
-                    <Link to="/register" className="link-default m-fsz s-fsz" style={{color: '#c38161'}}>
-                      Register!
-                    </Link>
-                  </span>
-                </p>
-                <p className="text-center m-fsz-22 m-all-fsz"> or -</p>
-                <Button
+                <div className="login-page__register-form--bottom">
+                  <p className="text-center m-fsz-22">
+                    Don't have an Account?{" "}
+                    <span className="fw-b">
+                      <Link
+                        to="/register"
+                        className="link-default m-fsz s-fsz"
+                        style={{ color: "#c38161" }}
+                      >
+                        Register!
+                      </Link>
+                    </span>
+                  </p>
+                  <p
+                    className="text-center m-fsz-22 m-all-fsz"
+                    style={{ fontSize: 14, color: "#999" }}
+                  >
+                    {" "}
+                    - or Login with -
+                  </p>
+                  {/* <Button
                   type="submit"
-                  className="br-6 btn m-all-fsz s-all-fsz"
+                  className="br-6 btn m-all-fsz s-all-fsz login-button"
                   style={{
                     width: "100%",
                     padding: "11px",
                     backgroundColor: "#435994",
                   }}
-                >
-                  <FaFacebook
-                    className="m-fsz s-fsz"
-                    style={{
-                      lineHeight: "50px",
-                      fontSize: "25px",
-                      marginRight: "6px",
-                    }}
-                  />
-                  Login with Facebook
-                </Button>
+                > */}
+                  <div className="login-page__register-form--bottomIcon">
+                    <FaFacebook
+                      className="m-fsz s-fsz social-icon"
+                      style={{
+                        lineHeight: 50,
+                        fontSize: 35,
+                        marginRight: 4,
+                        color: "#486ba3",
+                      }}
+                    />
+
+                    <GoogleIcon
+                      className="m-fsz s-fsz social-icon"
+                      style={{
+                        lineHeight: 50,
+                        fontSize: 35,
+                        marginLeft: 4,
+                        color: "#e34133",
+                      }}
+                      onClick={google}
+                    />
+                    {/* <GitHubIcon
+                      className="m-fsz s-fsz social-icon"
+                      style={{
+                        lineHeight: 50,
+                        fontSize: 35,
+                      }}
+                    /> */}
+                  </div>
+                </div>
               </div>
             </Form>
           </Col>
         </Row>
       </Container>
-        <div className={isFetching ? 'openModal': ''}>
-          {isFetching && `Wait a second...`}
-          {isFetching &&
-            <CircularProgress style={{ color: 'white', marginLeft: 5 }} />}
-        </div>
+      <div className={isFetching ? "openModal" : ""}>
+        {isFetching && `Wait a second...`}
+        {isFetching && (
+          <CircularProgress style={{ color: "white", marginLeft: 5 }} />
+        )}
       </div>
+    </div>
   );
 }

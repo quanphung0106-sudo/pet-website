@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./register.css";
 import axios from "axios";
 import RegisterModalError from "../../components/registerModalError/RegisterModalError";
+import RegisterModal from "../../components/registerModal/RegisterModal";
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
@@ -12,13 +13,15 @@ export default function Register() {
   const [validatePassword, setValidatePassword] = useState(true);
   const [signupFailure, setSignupFailure] = useState(false);
 
+  const [authEmail, setAuthEmail] = useState(false);
+
   const username = useRef();
   const email = useRef();
   const password = useRef();
   const confirmPassword = useRef();
   const navigate = useNavigate();
   //allow "_ -, number, letter and no allow whitespace,@,$..."
-  const usernameRegex = /^(?=.*[a-z])[a-z1-9_-]+$/i;
+  const usernameRegex = /^(?=.*[a-z])[a-z0-9_-]{7,19}$/i;
   const emailRegex =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   const passwordRegex =
@@ -45,8 +48,10 @@ export default function Register() {
       };
       try {
         await axios.post("http://localhost:8800/api/auth/register", user);
-        navigate("/login");
+        // navigate("/login");
+        setAuthEmail(true);
       } catch (err) {
+        console.log(err);
         registerModalError(err);
       }
     }
@@ -84,7 +89,7 @@ export default function Register() {
     if (!checkValue || !checkValue.match(usernameRegex)) {
       usernameErrorElement.classList.add("error-message");
       usernameErrorElement.innerText =
-        "Don't allow space or special characters!";
+        "Username should be 7-19 characters and no whitespace or special characters are allowed!";
     } else {
       usernameErrorElement.classList.remove("error-message");
       usernameErrorElement.innerText = "";
@@ -292,6 +297,12 @@ export default function Register() {
         <RegisterModalError
           signupFailure={signupFailure}
           setSignupFailure={setSignupFailure}
+        />
+      )}
+      {authEmail && (
+        <RegisterModal
+        authEmail={authEmail}
+          setAuthEmail={setAuthEmail}
         />
       )}
     </div>

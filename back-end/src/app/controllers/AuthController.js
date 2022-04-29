@@ -26,6 +26,7 @@ const createUser = async (req, res) => {
       });
       await newUser.save();
       sendConfirmationEmail({ toUser: req.body }, newUser._id);
+      console.log({ toUser: req.body }, newUser._id);
       res.status(200).json(newUser);
     }
   } catch (err) {
@@ -35,29 +36,40 @@ const createUser = async (req, res) => {
 
 //[POST]: /api/auth/login
 const userLogin = async (req, res) => {
-  // const user = await User.findOne({ username: req.body.username });
-  // const check = user.acctiveAccount;
-  // const username = user.username;
-  // const password = user.password;
-  // console.log(check, username, password);
   try {
-  //   if (check === false || !username || !password) {
-  //     res.status(404).json("Tài khoảng chưa xác thực hoặc không tồn tại");
-  //     console.log("Tài khoảng chưa xác thực hoặc không tồn tại");
-  //   } else {
-  //     res.status(200).json(user);
-  //     console.log(user);
-  //   }
+    // const user = await User.findOne({ username: req.body.username });
+    // const check = user.acctiveAccount;
+    // const username = user.username;
+    // const password = user.password;
+    // if(req.body.username) {
+    //   console.log(user, check, username, password);
+    //   console.log(req.body.username);
+    //   if (check === false || !user || !password) {
+    //     res.json("Tài khoảng chưa xác thực hoặc không tên tài khoản hoặc mật khẩu sai");
+    //     console.log("Tài khoảng chưa xác thực hoặc không tên tài khoản hoặc mật khẩu sai");
+    //   } else {
+    //     res.status(200).json(user);
+    //     console.log(user);
+    //   }
+    // } else {
+    //   res.json("Tài khoản không tồn tại")
+    //   console.log("Tài khoản không tồn tại");
+    // }
 
     const user = await User.findOne({ username: req.body.username });
     !user && res.status(404).json("User not found!");
 
     const validPassword = await User.findOne({ password: req.body.password });
     !validPassword && res.status(404).json("Wrong password");
-    
+
+    const check = await User.findOne({ acctiveAccount: req.body.acctiveAccount });
+    check == false && res.status(404).json("Have not been actived");
+
+    console.log(user, validPassword, check);
     res.status(200).json(user);
   } catch (err) {
     res.status(500).json(err);
+    console.log(err);
   }
 };
 

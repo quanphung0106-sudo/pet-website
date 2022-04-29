@@ -34,5 +34,4 @@ exports.sendConfirmationEmail = function ({ toUser }, id) {
     });
   };
   sendEmail();
-  return validInfor;
 };

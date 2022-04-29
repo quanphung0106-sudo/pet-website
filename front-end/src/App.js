@@ -19,13 +19,14 @@ function App() {
         path="/register"
         element={user ? <Navigate to="/" /> : <Register />}
       />
-      <Route path="/alert-success" element={<AlertSuccess />} />
+      <Route path="/api/auth/active-account" element={<AlertSuccess />} />
     </Routes>
   );
 }
+
 // function App() {
-//   const { user } = useContext(AuthContext);
-//   const [myUser, setMyUser] = useState(null);
+//   // const { user } = useContext(AuthContext);
+//   const [user, setUser] = useState(null);
 
 //   useEffect(() => {
 //     const getUser = () => {
@@ -43,7 +44,7 @@ function App() {
 //           throw new Error("authentication has been failed!");
 //         })
 //         .then((resObject) => {
-//           setMyUser(resObject.myUser);
+//           setUser(resObject.user);
 //         })
 //         .catch((err) => {
 //           console.log(err);
@@ -51,26 +52,20 @@ function App() {
 //     };
 //     getUser();
 //   }, []);
-
-//   console.log(myUser);
-//   if (myUser !== null) {
-//     axios.post("http://localhost:8800/api/auth/register", myUser);
-//     console.log(myUser);
+  
+//   console.log(user);
+//   if (user !== null) {
+//     axios.post("http://localhost:8800/api/auth/register", user);
+//     console.log(user);
 //   }
 
 //   return (
 //     <Routes>
-//       <Route
-//         path="/"
-//         element={user || myUser ? <Home myUser={myUser} /> : <Login />}
-//       />
-//       <Route
-//         path="/login"
-//         element={user || myUser ? <Navigate to="/" /> : <Login />}
-//       />
+//       <Route path="/" element={user ? <Home user={user} /> : <Login />} />
+//       <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
 //       <Route
 //         path="/register"
-//         element={user || myUser ? <Navigate to="/" /> : <Register />}
+//         element={user ? <Navigate to="/" /> : <Register />}
 //       />
 //     </Routes>
 //   );

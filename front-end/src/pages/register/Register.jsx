@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Button, Container, Row, Col, Form, InputGroup } from "react-bootstrap";
-import { FaEyeSlash, FaEye, FaDoorClosed } from "react-icons/fa";
+import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import "./register.css";
 import axios from "axios";
@@ -48,7 +48,6 @@ export default function Register() {
       };
       try {
         await axios.post("http://localhost:8800/api/auth/register", user);
-        // navigate("/login");
         setAuthEmail(true);
       } catch (err) {
         console.log(err);

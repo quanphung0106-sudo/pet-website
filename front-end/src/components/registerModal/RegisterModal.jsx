@@ -12,9 +12,9 @@ const RegisterModal = (props) => {
     <>
       <Modal className="errorModal" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Welcome!!</Modal.Title>
+          <Modal.Title>Welcome</Modal.Title>
         </Modal.Header>
-        <Modal.Body>Chúng tôi đã gửi mail cho bạn. Xác nhận đê!</Modal.Body>
+        <Modal.Body>Chúng tôi đã gửi mail tới tài khoản gmail của bạn. Vui lòng kiểm tra email!</Modal.Body>
         <Modal.Footer>
           <Button
             className="hoverButton"

@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-exports.sendConfirmationEmail = function ({ toUser }) {
+exports.sendConfirmationEmail = function ({ toUser }, id) {
   const sendEmail = async (req, res) => {
     var transporter = nodemailer.createTransport({
       // config mail server
@@ -21,19 +21,18 @@ exports.sendConfirmationEmail = function ({ toUser }) {
       <p>You recieved message from ${process.env.GOOGLE_USER} with: </p>
       <p>Username: ${toUser.username}</p>
       <p>Email: ${toUser.email}</p>
-      <p>To activate your account please follow this link: <a target="_" href="http://localhost:8800/api/auth/active-account/${toUser.email}">Active your account</a></p>
-      <p>Thank you bro!</p>
+      <p>To activate your account please follow this link: <a target="_" href="http://localhost:3000/api/auth/active-account?id=${id}">Active your account</a></p>
+      <p>Thank you!</p>
   `,
     };
     transporter.sendMail(mainOptions, function (err, info) {
       if (err) {
         console.log(err);
-        res.redirect("/");
       } else {
         console.log("Message sent: " + info.response);
-        res.redirect("/");
       }
     });
   };
   sendEmail();
+  return validInfor;
 };

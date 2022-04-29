@@ -7,36 +7,54 @@ const { sendConfirmationEmail } = require("../../mailer");
 //[POST]: /api/auth/register
 const createUser = async (req, res) => {
   try {
-    const newUser = await new User({
-      username: req.body.username,
-      // displayName: req.body.displayName,
-      email: req.body.email,
-      password: req.body.password,
-      // photos: req.body.photos[0].value,
-      // googleId: req.body.id,
-    });
-    sendConfirmationEmail({ toUser: req.body });
-    const user = await newUser.save();
-    console.log({ toUser: req.body });
-    res.status(200).json("Check your email");
+    if (req.body.id) {
+      const user = await User.findOneAndUpdate(
+        { _id: req.body.id },
+        {
+          acctiveAccount: true,
+        }
+      );
+    } else {
+      const newUser = await new User({
+        username: req.body.username,
+        // displayName: req.body.displayName,
+        email: req.body.email,
+        password: req.body.password,
+        // photos: req.body.photos[0].value,
+        // googleId: req.body.id,
+        acctiveAccount: false,
+      });
+      await newUser.save();
+      sendConfirmationEmail({ toUser: req.body }, newUser._id);
+      res.status(200).json(newUser);
+    }
   } catch (err) {
     res.status(500).json(err);
   }
 };
 
-const acctiveAccount = async (req, res) => {
-  res.redirect('http://localhost:3000/alert-success');
-};
-
 //[POST]: /api/auth/login
 const userLogin = async (req, res) => {
+  // const user = await User.findOne({ username: req.body.username });
+  // const check = user.acctiveAccount;
+  // const username = user.username;
+  // const password = user.password;
+  // console.log(check, username, password);
   try {
+  //   if (check === false || !username || !password) {
+  //     res.status(404).json("Tài khoảng chưa xác thực hoặc không tồn tại");
+  //     console.log("Tài khoảng chưa xác thực hoặc không tồn tại");
+  //   } else {
+  //     res.status(200).json(user);
+  //     console.log(user);
+  //   }
+
     const user = await User.findOne({ username: req.body.username });
     !user && res.status(404).json("User not found!");
 
     const validPassword = await User.findOne({ password: req.body.password });
     !validPassword && res.status(404).json("Wrong password");
-
+    
     res.status(200).json(user);
   } catch (err) {
     res.status(500).json(err);
@@ -80,5 +98,4 @@ module.exports = {
   loginFailured,
   loginSuccess,
   logout,
-  acctiveAccount,
 };

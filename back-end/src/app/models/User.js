@@ -9,7 +9,7 @@ const UserSchema = new Schema(
     username: {
       type: String,
       max: 30,
-      unique: true
+      unique: true,
     },
     displayName: {
       type: String,
@@ -17,13 +17,16 @@ const UserSchema = new Schema(
     email: {
       type: String,
       max: 50,
-      unique: true
+      unique: true,
     },
     password: {
       type: String,
     },
     photos: {
       type: String,
+    },
+    acctiveAccount: {
+      type: Boolean,
     },
   },
   {

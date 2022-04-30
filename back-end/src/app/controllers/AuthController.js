@@ -42,19 +42,17 @@ const userLogin = async (req, res) => {
     if (user) {
       console.log(user, user.password, req.body.password);
       if (user.acctiveAccount === false) {
-        res.json("active đê");
+        res.status(404).json("active đê");
       } else if (req.body.password !== user.password) {
-        res.json("nhớ lại pass đê");
+        res.status(404).json("nhớ lại pass đê");
       } else {
-        res.json(user);
+        res.status(200).json(user);
       }
     } else {
       res.json("Tài khoản không tồn tại");
     }
-
-    // res.status(200).json(user);
   } catch (err) {
-    res.json(err);
+    res.status(500).json(err);
   }
 };
 

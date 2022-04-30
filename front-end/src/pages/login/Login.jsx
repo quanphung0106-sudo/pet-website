@@ -7,10 +7,12 @@ import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import { CircularProgress } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
+import LoginModal from "../../components/loginModal/LoginModal";
 // import GitHubIcon from "@mui/icons-material/GitHub";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const [loginFailure, setLoginFailure] = useState(false);
 
   const username = useRef();
   const password = useRef();
@@ -32,9 +34,10 @@ export default function Login() {
         userInfo
       );
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
-      // console.log(userInfo);
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err });
+      setLoginFailure(true);
+      console.log("Lỗi");
     }
   };
 
@@ -89,7 +92,7 @@ export default function Login() {
                     placeholder="Enter your username"
                     required
                     ref={username}
-                    value={"phungdinhquan16"}
+                    defaultValue={"phungdinhquan16"}
                   />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -101,7 +104,7 @@ export default function Login() {
                       className="br-6 m-all-fsz s-all-fsz"
                       required
                       ref={password}
-                      value={"quan1!"}
+                      defaultValue={"quan1!"}
                     />
                     <div
                       className="position-absolute"
@@ -205,6 +208,13 @@ export default function Login() {
           <CircularProgress style={{ color: "white", marginLeft: 5 }} />
         )}
       </div>
+
+      {loginFailure && (
+        <LoginModal
+          loginFailure={loginFailure}
+          setLoginFailure={setLoginFailure}
+        />
+      )}
     </div>
   );
 }

@@ -89,6 +89,7 @@ export default function Login() {
                     placeholder="Enter your username"
                     required
                     ref={username}
+                    value={"phungdinhquan16"}
                   />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -100,6 +101,7 @@ export default function Login() {
                       className="br-6 m-all-fsz s-all-fsz"
                       required
                       ref={password}
+                      value={"quan1!"}
                     />
                     <div
                       className="position-absolute"

@@ -37,39 +37,24 @@ const createUser = async (req, res) => {
 //[POST]: /api/auth/login
 const userLogin = async (req, res) => {
   try {
-    // const user = await User.findOne({ username: req.body.username });
-    // const check = user.acctiveAccount;
-    // const username = user.username;
-    // const password = user.password;
-    // if(req.body.username) {
-    //   console.log(user, check, username, password);
-    //   console.log(req.body.username);
-    //   if (check === false || !user || !password) {
-    //     res.json("Tài khoảng chưa xác thực hoặc không tên tài khoản hoặc mật khẩu sai");
-    //     console.log("Tài khoảng chưa xác thực hoặc không tên tài khoản hoặc mật khẩu sai");
-    //   } else {
-    //     res.status(200).json(user);
-    //     console.log(user);
-    //   }
-    // } else {
-    //   res.json("Tài khoản không tồn tại")
-    //   console.log("Tài khoản không tồn tại");
-    // }
-
     const user = await User.findOne({ username: req.body.username });
-    !user && res.status(404).json("User not found!");
 
-    const validPassword = await User.findOne({ password: req.body.password });
-    !validPassword && res.status(404).json("Wrong password");
+    if (user) {
+      console.log(user, user.password, req.body.password);
+      if (user.acctiveAccount === false) {
+        res.json("active đê");
+      } else if (req.body.password !== user.password) {
+        res.json("nhớ lại pass đê");
+      } else {
+        res.json(user);
+      }
+    } else {
+      res.json("Tài khoản không tồn tại");
+    }
 
-    const check = await User.findOne({ acctiveAccount: req.body.acctiveAccount });
-    check == false && res.status(404).json("Have not been actived");
-
-    console.log(user, validPassword, check);
-    res.status(200).json(user);
+    // res.status(200).json(user);
   } catch (err) {
-    res.status(500).json(err);
-    console.log(err);
+    res.json(err);
   }
 };
 

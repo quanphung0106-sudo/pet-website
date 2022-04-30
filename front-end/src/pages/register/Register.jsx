@@ -138,7 +138,7 @@ export default function Register() {
           <Col className="rm-pd rm-col"></Col>
           <Col className="d-flex justify-content-center align-items-center rm-pd rm-margin">
             <Form
-              noValidate 
+              noValidate
               onSubmit={handleSubmit}
               className="register-page__register-form rm-br"
             >
@@ -152,15 +152,14 @@ export default function Register() {
                 <Form.Group className="mb-3" controlId="formBasicUserName">
                   <Form.Label className="fw-b m-all-fsz">Username</Form.Label>
                   <input
+                    value={"phungdinhquan16"}
                     type="text"
                     placeholder="Enter your username"
                     className="br-6 m-all-fsz s-all-fsz validate-input validate-input-username"
                     required
                     ref={username}
-                    onInvalid={(e) =>
-                      e.target.setCustomValidity('Remove')
-                    }
-                    onInput={(e) => e.target.setCustomValidity('')}
+                    onInvalid={(e) => e.target.setCustomValidity("Remove")}
+                    onInput={(e) => e.target.setCustomValidity("")}
                     onBlur={removeUsernameErrorMessage}
                     pattern={usernameRegex}
                   />
@@ -172,6 +171,7 @@ export default function Register() {
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label className="fw-b m-all-fsz">Email</Form.Label>
                   <input
+                    value={"phungdinhquan16@gmail.com"}
                     className="br-6 m-all-fsz s-all-fsz validate-input"
                     type="email"
                     placeholder="Enter your email"
@@ -189,6 +189,7 @@ export default function Register() {
                   <Form.Label className="fw-b m-all-fsz">Password</Form.Label>
                   <InputGroup className="position-relative">
                     <input
+                      value={"quan123!"}
                       type={`${showPassword ? "text" : "password"}`}
                       placeholder="Enter your password"
                       className={`br-6 m-all-fsz s-all-fsz validate-input validate-input-password
@@ -227,6 +228,7 @@ export default function Register() {
                   </Form.Label>
                   <InputGroup className="position-relative">
                     <input
+                      value={"quan123!"}
                       type={`${showPassword2 ? "text" : "password"}`}
                       placeholder="Confirm your password"
                       className={`br-6 m-all-fsz s-all-fsz validate-input
@@ -299,10 +301,7 @@ export default function Register() {
         />
       )}
       {authEmail && (
-        <RegisterModal
-        authEmail={authEmail}
-          setAuthEmail={setAuthEmail}
-        />
+        <RegisterModal authEmail={authEmail} setAuthEmail={setAuthEmail} />
       )}
     </div>
   );

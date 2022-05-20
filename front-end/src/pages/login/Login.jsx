@@ -15,6 +15,7 @@ export default function Login() {
   const [loginFailure, setLoginFailure] = useState(false);
 
   const username = useRef();
+  const email = useRef();
   const password = useRef();
   const { user, dispatch, isFetching } = useContext(AuthContext);
   const hideOrShowPassword = () => {
@@ -24,9 +25,10 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const userInfo = {
-      username: username.current.value,
+      accountName: username.current.value || email.current.value,
       password: password.current.value,
     };
+    console.log(userInfo);
     dispatch({ type: "LOGIN_START" });
     try {
       const res = await axios.post(
@@ -37,7 +39,6 @@ export default function Login() {
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err });
       setLoginFailure(true);
-      console.log("Lỗi");
     }
   };
 
@@ -81,18 +82,17 @@ export default function Login() {
               className="login-page__register-form rm-br"
             >
               <div className="login-page__register-form--padding">
-                <h4 className="fw-b m-fsz">Welcome back!</h4>
+                <h4 className="fw-b m-fsz" style={{marginBottom: '25px'}}>Welcome back!</h4>
                 {/* <h3 className="fw-b m-fsz">Sign in to</h3>
                 <p className="fw-b m-fsz">Enjoy the moment.</p> */}
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label className="fw-b m-all-fsz">Username</Form.Label>
+                  <Form.Label className="fw-b m-all-fsz">Username <span style={{fontWeight: 400}}>or</span> Email</Form.Label>
                   <Form.Control
                     className="br-6 m-all-fsz s-all-fsz"
                     type="text"
-                    placeholder="Enter your username"
+                    placeholder="Enter your username/email"
                     required
-                    ref={username}
-                    defaultValue={"phungdinhquan16"}
+                    ref={username || email}
                   />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -104,7 +104,6 @@ export default function Login() {
                       className="br-6 m-all-fsz s-all-fsz"
                       required
                       ref={password}
-                      defaultValue={"quan1!"}
                     />
                     <div
                       className="position-absolute"
@@ -151,51 +150,6 @@ export default function Login() {
                       </Link>
                     </span>
                   </p>
-                  <p
-                    className="text-center m-fsz-22 m-all-fsz"
-                    style={{ fontSize: 14, color: "#999" }}
-                  >
-                    {" "}
-                    - or Login with -
-                  </p>
-                  {/* <Button
-                  type="submit"
-                  className="br-6 btn m-all-fsz s-all-fsz login-button"
-                  style={{
-                    width: "100%",
-                    padding: "11px",
-                    backgroundColor: "#435994",
-                  }}
-                > */}
-                  <div className="login-page__register-form--bottomIcon">
-                    <FaFacebook
-                      className="m-fsz s-fsz social-icon"
-                      style={{
-                        lineHeight: 50,
-                        fontSize: 35,
-                        marginRight: 4,
-                        color: "#486ba3",
-                      }}
-                    />
-
-                    <GoogleIcon
-                      className="m-fsz s-fsz social-icon"
-                      style={{
-                        lineHeight: 50,
-                        fontSize: 35,
-                        marginLeft: 4,
-                        color: "#e34133",
-                      }}
-                      onClick={google}
-                    />
-                    {/* <GitHubIcon
-                      className="m-fsz s-fsz social-icon"
-                      style={{
-                        lineHeight: 50,
-                        fontSize: 35,
-                      }}
-                    /> */}
-                  </div>
                 </div>
               </div>
             </Form>

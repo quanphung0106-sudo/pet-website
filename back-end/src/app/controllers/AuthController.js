@@ -1,5 +1,4 @@
 const User = require("../models/User");
-const passport = require("passport");
 const CLIENT_URL = "http://localhost:3000/";
 const { sendConfirmationEmail } = require("../../mailer");
 // const nodemailer = require("nodemailer");
@@ -17,11 +16,8 @@ const createUser = async (req, res) => {
     } else {
       const newUser = await new User({
         username: req.body.username,
-        // displayName: req.body.displayName,
         email: req.body.email,
         password: req.body.password,
-        // photos: req.body.photos[0].value,
-        // googleId: req.body.id,
         acctiveAccount: false,
       });
       await newUser.save();
@@ -39,12 +35,14 @@ const userLogin = async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
 
+    console.log(user);
+
     if (user) {
       console.log(user, user.password, req.body.password);
       if (user.acctiveAccount === false) {
-        res.status(404).json("active đê");
+        res.status(404).json("please active your email");
       } else if (req.body.password !== user.password) {
-        res.status(404).json("nhớ lại pass đê");
+        res.status(404).json("wrong password");
       } else {
         res.status(200).json(user);
       }
@@ -56,41 +54,7 @@ const userLogin = async (req, res) => {
   }
 };
 
-const loginByGoogle = passport.authenticate("google", { scope: ["profile"] });
-
-const callbackGoogle = passport.authenticate("google", {
-  successRedirect: CLIENT_URL,
-  failureRedirect: "/login/failured",
-});
-
-const loginFailured = (req, res) => {
-  res.status(401).json({
-    success: false,
-    message: "Failure",
-  });
-};
-
-const loginSuccess = (req, res) => {
-  if (req.user) {
-    res.status(200).json({
-      success: true,
-      message: "Successfully",
-      user: req.user,
-    });
-  }
-};
-
-const logout = (req, res) => {
-  req.logout();
-  res.redirect(CLIENT_URL);
-};
-
 module.exports = {
   createUser,
   userLogin,
-  loginByGoogle,
-  callbackGoogle,
-  loginFailured,
-  loginSuccess,
-  logout,
 };

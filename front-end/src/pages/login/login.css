@@ -78,7 +78,7 @@
 
 .login-page__register-form {
   background-color: rgba(255, 255, 255, 0.8);
-  min-height: 500px;
+  min-height: 450px;
   max-height: 750px;
   width: 360px;
   /* border: 1.5px solid #000; */
@@ -111,6 +111,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 15px;
 }
 
 .login-page__register-form--bottomIcon {

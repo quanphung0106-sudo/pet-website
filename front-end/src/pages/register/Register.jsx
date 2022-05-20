@@ -152,7 +152,6 @@ export default function Register() {
                 <Form.Group className="mb-3" controlId="formBasicUserName">
                   <Form.Label className="fw-b m-all-fsz">Username</Form.Label>
                   <input
-                    defaultValue={"phungdinhquan16"}
                     type="text"
                     placeholder="Enter your username"
                     className="br-6 m-all-fsz s-all-fsz validate-input validate-input-username"
@@ -171,7 +170,6 @@ export default function Register() {
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label className="fw-b m-all-fsz">Email</Form.Label>
                   <input
-                    defaultValue={"phungdinhquan16@gmail.com"}
                     className="br-6 m-all-fsz s-all-fsz validate-input"
                     type="email"
                     placeholder="Enter your email"
@@ -189,7 +187,6 @@ export default function Register() {
                   <Form.Label className="fw-b m-all-fsz">Password</Form.Label>
                   <InputGroup className="position-relative">
                     <input
-                      defaultValue={"quan123!"}
                       type={`${showPassword ? "text" : "password"}`}
                       placeholder="Enter your password"
                       className={`br-6 m-all-fsz s-all-fsz validate-input validate-input-password
@@ -228,7 +225,6 @@ export default function Register() {
                   </Form.Label>
                   <InputGroup className="position-relative">
                     <input
-                      defaultValue={"quan123!"}
                       type={`${showPassword2 ? "text" : "password"}`}
                       placeholder="Confirm your password"
                       className={`br-6 m-all-fsz s-all-fsz validate-input

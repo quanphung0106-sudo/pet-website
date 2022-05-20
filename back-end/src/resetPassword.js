@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-exports.sendConfirmationEmail = function ({ toUser }, id) {
+exports.sendResetPasswordEmail = function ({ toUser }, id) {
   const sendEmail = async (req, res) => {
     var transporter = nodemailer.createTransport({
       // config mail server

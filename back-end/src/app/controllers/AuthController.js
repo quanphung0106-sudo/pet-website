@@ -1,7 +1,7 @@
 const User = require("../models/User");
 const CLIENT_URL = "http://localhost:3000/";
 const { sendConfirmationEmail } = require("../../mailer");
-// const nodemailer = require("nodemailer");
+const { sendResetPasswordEmail } = require("../../resetPassword");
 
 //[POST]: /api/auth/register
 const createUser = async (req, res) => {
@@ -54,7 +54,22 @@ const userLogin = async (req, res) => {
   }
 };
 
+//[POST]: /api/auth/reset-password
+const resetPassword = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    sendResetPasswordEmail({ toUser: req.body }, newUser._id);
+    console.log({ toUser: req.body }, user._id);
+    res.status(200).json(user)
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+
+
 module.exports = {
   createUser,
   userLogin,
+  resetPassword
 };

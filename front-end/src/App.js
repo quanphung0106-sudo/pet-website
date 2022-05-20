@@ -23,7 +23,7 @@ function App() {
         element={user ? <Navigate to="/" /> : <Register />}
       />
       <Route path="/api/auth/active-account" element={<AlertSuccess />} />
-      <Route path="/api/auth/reset" element={<Reset />} />
+      <Route path="/api/auth/reset-password" element={<Reset />} />
     </Routes>
   );
 }

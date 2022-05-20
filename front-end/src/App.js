@@ -7,6 +7,8 @@ import Home from "./pages/home/Home";
 import { AuthContext } from "./context/AuthContext";
 import axios from "axios";
 import AlertSuccess from "./components/aleartSuccess/AlertSuccess";
+import ForgotPassword from './pages/forgotPassword/ForgotPassword';
+import Reset from './pages/resetPassword/Reset'
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -15,11 +17,13 @@ function App() {
     <Routes>
       <Route path="/" element={user ? <Home /> : <Login />} />
       <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
+      <Route path="/reset-password" element={<ForgotPassword/>} />
       <Route
         path="/register"
         element={user ? <Navigate to="/" /> : <Register />}
       />
       <Route path="/api/auth/active-account" element={<AlertSuccess />} />
+      <Route path="/api/auth/reset" element={<Reset />} />
     </Routes>
   );
 }

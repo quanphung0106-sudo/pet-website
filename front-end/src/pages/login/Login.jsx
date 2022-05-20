@@ -15,7 +15,6 @@ export default function Login() {
   const [loginFailure, setLoginFailure] = useState(false);
 
   const username = useRef();
-  const email = useRef();
   const password = useRef();
   const { user, dispatch, isFetching } = useContext(AuthContext);
   const hideOrShowPassword = () => {
@@ -25,7 +24,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const userInfo = {
-      accountName: username.current.value || email.current.value,
+      username: username.current.value,
       password: password.current.value,
     };
     console.log(userInfo);
@@ -86,13 +85,13 @@ export default function Login() {
                 {/* <h3 className="fw-b m-fsz">Sign in to</h3>
                 <p className="fw-b m-fsz">Enjoy the moment.</p> */}
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label className="fw-b m-all-fsz">Username <span style={{fontWeight: 400}}>or</span> Email</Form.Label>
+                  <Form.Label className="fw-b m-all-fsz">Username</Form.Label>
                   <Form.Control
                     className="br-6 m-all-fsz s-all-fsz"
                     type="text"
                     placeholder="Enter your username/email"
                     required
-                    ref={username || email}
+                    ref={username}
                   />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -137,6 +136,13 @@ export default function Login() {
                 >
                   Login
                 </Button>
+                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'flex-end'}} className="forgot">
+                  <Link to='/reset-password' style={{textDecoration: 'none', color: 'black'}}>
+                    <p className=" m-fsz-22">
+                      Forgot password?
+                    </p>
+                  </Link>
+                </div>
                 <div className="login-page__register-form--bottom">
                   <p className="text-center m-fsz-22">
                     Don't have an Account?{" "}

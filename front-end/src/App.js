@@ -7,8 +7,9 @@ import Home from "./pages/home/Home";
 import { AuthContext } from "./context/AuthContext";
 import axios from "axios";
 import AlertSuccess from "./components/aleartSuccess/AlertSuccess";
-import ForgotPassword from './pages/forgotPassword/ForgotPassword';
-import Reset from './pages/resetPassword/Reset'
+import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
+import Reset from "./pages/resetPassword/Reset";
+import ResetSuccess from "./components/alertResetSuccess/ResetSuccess";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -17,13 +18,14 @@ function App() {
     <Routes>
       <Route path="/" element={user ? <Home /> : <Login />} />
       <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
-      <Route path="/reset-password" element={<ForgotPassword/>} />
+      <Route path="/reset-password" element={<ForgotPassword />} />
+      <Route path="/reset/:id" element={<Reset />} />
       <Route
         path="/register"
         element={user ? <Navigate to="/" /> : <Register />}
       />
       <Route path="/api/auth/active-account" element={<AlertSuccess />} />
-      <Route path="/api/auth/reset-password" element={<Reset />} />
+      <Route path="/api/auth/reset-password" element={<ResetSuccess />} />
     </Routes>
   );
 }
@@ -56,7 +58,7 @@ function App() {
 //     };
 //     getUser();
 //   }, []);
-  
+
 //   console.log(user);
 //   if (user !== null) {
 //     axios.post("http://localhost:8800/api/auth/register", user);

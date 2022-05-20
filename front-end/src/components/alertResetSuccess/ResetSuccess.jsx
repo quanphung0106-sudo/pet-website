@@ -10,10 +10,12 @@ const ResetSuccess = () => {
 
   useEffect(() => {
     const query = async () => {
-      await axios.post("http://localhost:8800/api/auth/reset-password", {id});
+      await axios.post("http://localhost:8800/api/auth/reset-password", { id });
     };
     query();
   }, [id]);
+
+  console.log(id);
 
   return (
     <Container>
@@ -22,7 +24,7 @@ const ResetSuccess = () => {
           <Alert.Heading>Welcome back to my Website!!</Alert.Heading>
           <p>Click on the button to reset password.</p>
           <hr />
-          <Link to="/reset-password">
+          <Link to={`/reset/${id}`}>
             <Button
               className="hoverButton"
               style={{

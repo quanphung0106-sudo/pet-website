@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Button, Container, Row, Col, Form, InputGroup } from "react-bootstrap";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "./reset.css";
 import axios from "axios";
 import RegisterModalError from "../../components/registerModalError/RegisterModalError";
@@ -11,6 +11,10 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const [validatePassword, setValidatePassword] = useState(true);
+
+  const params = useParams();
+
+  console.log("id", params.id);
 
   const password = useRef();
   const confirmPassword = useRef();
@@ -50,10 +54,16 @@ export default function Register() {
     } else {
       setValidatePassword(true);
       const user = {
+        id: params.id,
         password: password.current.value,
       };
+      console.log(user);
       try {
-        await axios.post("http://localhost:8800/api/auth/register", user);
+        await axios.post(
+          "http://localhost:8800/api/auth/change-password",
+          user
+        );
+        navigate("/login");
       } catch (err) {
         console.log(err);
       }
@@ -67,11 +77,26 @@ export default function Register() {
         className="rm-pd l-all-fsz s-all-fsz"
         style={{ height: "100vh" }}
       >
+        {/* <img
+          className="register-page__images--tl"
+          src="./assets/images/dog-6.jpg"
+          alt="register background tablet"
+        />
+        <img
+          className="register-page__images--mb"
+          src="./assets/images/dog-3.jpg"
+          alt="register background mobile"
+        /> */}
+          <img
+            className="register-page__images"
+            src="./assets/images/background-signin-signup.jpg"
+            alt=""
+          />
         <Row className="register-page rm-margin">
           <Col className="rm-pd rm-col"></Col>
           <Col className="d-flex justify-content-center align-items-center rm-pd rm-margin">
             <Form
-            onSubmit={handleSubmit}
+              onSubmit={handleSubmit}
               noValidate
               className="register-page__register-form rm-br"
             >

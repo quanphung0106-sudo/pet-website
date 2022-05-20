@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-exports.sendResetPasswordEmail = function ({ toUser }, id) {
+exports.sendResetPasswordEmail = function ({ myUser }, id) {
   const sendEmail = async (req, res) => {
     var transporter = nodemailer.createTransport({
       // config mail server
@@ -13,14 +13,12 @@ exports.sendResetPasswordEmail = function ({ toUser }, id) {
     var mainOptions = {
       // thiết lập đối tượng, nội dung gửi mail
       from: process.env.GOOGLE_USER,
-      to: toUser.email,
-      subject: "Authenticate Email",
-      text: "You recieved message from " + toUser.email,
+      to: myUser.email,
+      subject: "Reset password",
+      text: "You recieved message from " + myUser.email,
       html: `
-      <h3>Hello ${toUser.username}</h3>
       <p>You recieved message from ${process.env.GOOGLE_USER} with: </p>
-      <p>Username: ${toUser.username}</p>
-      <p>Email: ${toUser.email}</p>
+      <p>Email: ${myUser.email}</p>
       <p>To reset your password please follow this link: <a target="_" href="http://localhost:3000/api/auth/reset-password?id=${id}">Reset your password</a></p>
       <p>Thank you!</p>
   `,

@@ -57,19 +57,43 @@ const userLogin = async (req, res) => {
 //[POST]: /api/auth/reset-password
 const resetPassword = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
-    sendResetPasswordEmail({ toUser: req.body }, newUser._id);
-    console.log({ toUser: req.body }, user._id);
-    res.status(200).json(user)
+    if (req.body.id) {
+      const user = await User.findOneAndUpdate(
+        { _id: req.body.id },
+        { password: req.body.password }
+      );
+    } else {
+      const user = await User.findOne({ email: req.body.email });
+      sendResetPasswordEmail({ myUser: req.body }, user._id);
+      console.log({ myUser: req.body }, user._id);
+      res.status(200).json(user);
+    }
   } catch (err) {
     res.status(500).json(err);
   }
 };
 
-
+//[POST]: /api/auth/reset-password
+const changePassword = async (req, res) => {
+  try {
+    if (req.body.id) {
+      console.log(req.body.id);
+      const user = await User.findOneAndUpdate(
+        { _id: req.body.id },
+        {
+          password: req.body.password,
+        }
+      );
+      res.status(200).json(user);
+    }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
 
 module.exports = {
   createUser,
   userLogin,
-  resetPassword
+  resetPassword,
+  changePassword,
 };

@@ -193,7 +193,7 @@ export default function Register() {
                     border: "none",
                   }}
                 >
-                  Register
+                  Change Password
                 </Button>
                 <p className="text-center mt-12 m-all-fsz">
                   Already have an Account?{" "}

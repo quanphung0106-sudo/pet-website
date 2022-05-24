@@ -7,6 +7,8 @@ const helmet = require("helmet");
 const route = require("./routes/index");
 const cors = require("cors");
 
+const petRoute = require("./routes/petroutes");
+
 dotenv.config();
 
 mongoose
@@ -32,6 +34,7 @@ app.use(
 );
 //Routes init
 route(app);
+app.use("/pet", petRoute);
 
 app.listen(port, () => {
   console.log(`Backend server is listening at http://localhost:${port}`);

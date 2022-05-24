@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const CLIENT_URL = "http://localhost:3000/";
+const bcrypt = require("bcrypt");
 const { sendConfirmationEmail } = require("../../mailer");
 const { sendResetPasswordEmail } = require("../../resetPassword");
 
@@ -14,10 +14,12 @@ const createUser = async (req, res) => {
         }
       );
     } else {
+      const salt = await bcrypt.genSalt(10);
+      const hassPassword = await bcrypt.hash(req.body.password, salt);
       const newUser = await new User({
         username: req.body.username,
         email: req.body.email,
-        password: req.body.password,
+        password: hassPassword,
         acctiveAccount: false,
       });
       await newUser.save();
@@ -34,6 +36,10 @@ const createUser = async (req, res) => {
 const userLogin = async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
+    const validPassword = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
 
     console.log(user);
 
@@ -41,7 +47,7 @@ const userLogin = async (req, res) => {
       console.log(user, user.password, req.body.password);
       if (user.acctiveAccount === false) {
         res.status(404).json("please active your email");
-      } else if (req.body.password !== user.password) {
+      } else if (!validPassword) {
         res.status(404).json("wrong password");
       } else {
         res.status(200).json(user);
@@ -75,13 +81,15 @@ const resetPassword = async (req, res) => {
 
 //[POST]: /api/auth/reset-password
 const changePassword = async (req, res) => {
+  const salt = await bcrypt.genSalt(10);
+  const hassPassword = await bcrypt.hash(req.body.password, salt);
   try {
     if (req.body.id) {
       console.log(req.body.id);
       const user = await User.findOneAndUpdate(
         { _id: req.body.id },
         {
-          password: req.body.password,
+          password: hassPassword,
         }
       );
       res.status(200).json(user);

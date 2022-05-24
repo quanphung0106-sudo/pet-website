@@ -17,7 +17,6 @@ export default function ForgotPassword() {
     const userInfo = {
       email: email.current.value,
     };
-    // console.log(userInfo);
     try {
       const res = await axios.post(
         "http://localhost:8800/api/auth/reset-password",
@@ -25,7 +24,6 @@ export default function ForgotPassword() {
       );
       setAuthEmail(true);
     } catch (err) {
-      console.log(err);
       setAuthEmail(false);
     }
   };

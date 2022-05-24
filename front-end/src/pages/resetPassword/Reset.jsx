@@ -56,7 +56,6 @@ export default function Register() {
       };
       if (user.password === "") {
         setValidatePassword(false);
-        console.log(user);
       } else {
         try {
           await axios.post(
@@ -65,7 +64,6 @@ export default function Register() {
           );
           navigate("/login");
         } catch (err) {
-          console.log(err);
         }
       }
     }

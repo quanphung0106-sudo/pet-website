@@ -15,7 +15,6 @@ const ResetSuccess = () => {
     query();
   }, [id]);
 
-  console.log(id);
 
   return (
     <Container>

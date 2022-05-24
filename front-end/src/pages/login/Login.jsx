@@ -27,7 +27,6 @@ export default function Login() {
       username: username.current.value,
       password: password.current.value,
     };
-    // console.log(userInfo);
     dispatch({ type: "LOGIN_START" });
     try {
       const res = await axios.post(
@@ -38,16 +37,6 @@ export default function Login() {
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err });
       setLoginFailure(true);
-    }
-  };
-
-  const google = () => {
-    //axios.get("http://localhost:8800/api/auth/google");
-
-    window.open("http://localhost:8800/api/auth/google", "_self");
-    console.log("My User: ", user);
-    if (user) {
-      console.log("My User: ", user);
     }
   };
 

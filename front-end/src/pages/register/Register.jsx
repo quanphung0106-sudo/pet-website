@@ -110,13 +110,11 @@ export default function Register() {
         !user.password.match(passwordRegex)
       ) {
         setSignupFailure(true);
-        console.log(user);
       } else {
         try {
           await axios.post("http://localhost:8800/api/auth/register", user);
           setAuthEmail(true);
         } catch (err) {
-          console.log(err);
           registerModalError("lỗi");
         }
       }

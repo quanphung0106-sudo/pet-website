@@ -16,8 +16,7 @@ const RegisterModalError = (props) => {
         </Modal.Header>
         <Modal.Body>
           Có vẻ như <span>tên tài khoản</span> hoặc <span>email</span> đã tồn
-          tại! Vui lòng sử dụng <span>tên tài khoản</span> hoặc{" "}
-          <span>email</span> khác.
+          tại hoặc không chính xác! Vui lòng kiểm tra lại.
         </Modal.Body>
         <Modal.Footer>
           <Button

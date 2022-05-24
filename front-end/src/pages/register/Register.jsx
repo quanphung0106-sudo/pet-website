@@ -46,12 +46,16 @@ export default function Register() {
         username: username.current.value,
         password: password.current.value,
       };
-      try {
-        await axios.post("http://localhost:8800/api/auth/register", user);
-        setAuthEmail(true);
-      } catch (err) {
-        console.log(err);
-        registerModalError(err);
+      if (!user) {
+        registerModalError("lỗi");
+      } else {
+        try {
+          await axios.post("http://localhost:8800/api/auth/register", user);
+          setAuthEmail(true);
+        } catch (err) {
+          console.log(err);
+          registerModalError(err);
+        }
       }
     }
   };
@@ -71,7 +75,7 @@ export default function Register() {
     const checkValue = emailInputElement.value;
     if (!checkValue || !checkValue.match(emailRegex)) {
       emailErrorElement.classList.add("error-message");
-      emailErrorElement.innerText = "It should be a valid email address!";
+      emailErrorElement.innerText = "Kiểm tra lại email!";
     } else {
       emailErrorElement.classList.remove("error-message");
       emailErrorElement.innerText = "";
@@ -88,7 +92,7 @@ export default function Register() {
     if (!checkValue || !checkValue.match(usernameRegex)) {
       usernameErrorElement.classList.add("error-message");
       usernameErrorElement.innerText =
-        "Username should be 7-19 characters and no whitespace or special characters are allowed!";
+        "Phải có 7-19 ký tự, không được chứa khoảng trắng hoặc ký tự đặc biệt!";
     } else {
       usernameErrorElement.classList.remove("error-message");
       usernameErrorElement.innerText = "";
@@ -105,7 +109,7 @@ export default function Register() {
     if (!checkValue || !checkValue.match(passwordRegex)) {
       passwordErrorElement.classList.add("error-message");
       passwordErrorElement.innerText =
-        "Password should be 8-19 characters and include at least 1 special character!";
+        "Mật khẩu phải có 8-19 ký tự và bao gồm ít nhất 1 ký tự đặc biệt!";
     } else {
       passwordErrorElement.classList.remove("error-message");
       passwordErrorElement.innerText = "";
@@ -146,8 +150,6 @@ export default function Register() {
                 <h4 className="fw-b m-fsz" style={{ marginBottom: 15 }}>
                   Welcome!
                 </h4>
-                {/* <h3 className="fw-b m-fsz">Sign up to</h3>
-                <p className="fw-b m-fsz">Enjoy the moment.</p> */}
 
                 <Form.Group className="mb-3" controlId="formBasicUserName">
                   <Form.Label className="fw-b m-all-fsz">Username</Form.Label>
@@ -256,7 +258,7 @@ export default function Register() {
                   >{`${
                     validatePassword
                       ? ""
-                      : "Password and confirm password does not match."
+                      : "Mật khẩu và mật khẩu xác nhận không khớp."
                   }`}</p>
                 </Form.Group>
                 <Button

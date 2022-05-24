@@ -4,7 +4,7 @@ import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import "./reset.css";
 import axios from "axios";
-import RegisterModalError from "../../components/registerModalError/RegisterModalError";
+import registerModalError from "../../components/registerModalError/RegisterModalError";
 import RegisterModal from "../../components/registerModal/RegisterModal";
 
 export default function Register() {
@@ -88,19 +88,19 @@ export default function Register() {
           alt="register background mobile"
         /> */}
           <img
-            className="register-page__images"
+            className="reset-page__images"
             src="./assets/images/background-signin-signup.jpg"
             alt=""
           />
-        <Row className="register-page rm-margin">
+        <Row className="reset-page rm-margin">
           <Col className="rm-pd rm-col"></Col>
           <Col className="d-flex justify-content-center align-items-center rm-pd rm-margin">
             <Form
               onSubmit={handleSubmit}
               noValidate
-              className="register-page__register-form rm-br"
+              className="reset-page__reset-form rm-br"
             >
-              <div className="register-page__register-form--padding">
+              <div className="reset-page__reset-form--padding">
                 <h4 className="fw-b m-fsz" style={{ marginBottom: 15 }}>
                   Welcome!
                 </h4>

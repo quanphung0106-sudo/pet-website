@@ -43,23 +43,23 @@
   border-bottom-right-radius: 6px;
 }
 
-.register-page__images--mb,
-.register-page__images--tl,
-.register-page__images {
+.reset-page__images--mb,
+.reset-page__images--tl,
+.reset-page__images {
   position: relative;
   width: 100%;
   height: 100vh;
 }
 
-.register-page__images--tl {
+.reset-page__images--tl {
   display: none;
 }
 
-.register-page__images--mb {
+.reset-page__images--mb {
   display: none;
 }
 
-.register-page {
+.reset-page {
   /* background-color: #000; */
   position: absolute;
   width: 100vw;
@@ -67,7 +67,7 @@
   top: 0;
 }
 
-.register-page__register-form {
+.reset-page__reset-form {
   background-color: rgba(255, 255, 255, 0.8);
   min-height: 450px;
   max-height: 720px;
@@ -77,11 +77,11 @@
   border: 2px solid rgb(195, 129, 97);
 }
 
-.register-page__register-form--padding {
+.reset-page__reset-form--padding {
   padding: 18px;
 }
 
-.register-page__register-form input {
+.reset-page__reset-form input {
   padding: 10px 0 10px 10px;
 }
 
@@ -90,15 +90,15 @@
   cursor: pointer;
 }
 
-.register-page__register-form input.error {
+.reset-page__reset-form input.error {
   box-shadow: 0 0 8px red !important;
 }
 
-.register-page__register-form input:focus {
+.reset-page__reset-form input:focus {
   box-shadow: 0 0 6px #000 !important;
 }
 
-.register-page__register-form button:hover {
+.reset-page__reset-form button:hover {
   opacity: 0.9;
 }
 
@@ -139,11 +139,11 @@ input:invalid ~ p {
     display: none;
   }
 
-  .register-page__images--tl {
+  .reset-page__images--tl {
     display: block;
   }
 
-  .register-page__images {
+  .reset-page__images {
     display: none;
   }
 
@@ -159,7 +159,7 @@ input:invalid ~ p {
     border-radius: 0px !important;
   }
 
-  .register-page__register-form {
+  .reset-page__reset-form {
     border: none;
   }
 }
@@ -182,7 +182,7 @@ input:invalid ~ p {
     margin-top: 12px;
   }
 
-  .register-page {
+  .reset-page {
     position: absolute;
     top: 0;
     right: 0;
@@ -190,19 +190,19 @@ input:invalid ~ p {
     bottom: 0;
   }
 
-  .register-page__images--tl {
+  .reset-page__images--tl {
     display: block;
   }
 
-  .register-page__images {
+  .reset-page__images {
     display: none;
   }
 
-  .register-page__images--mb {
+  .reset-page__images--mb {
     display: none;
   }
 
-  .register-page__register-form {
+  .reset-page__reset-form {
     width: 400px;
     min-height: 800px;
     max-height: 880px;
@@ -219,29 +219,29 @@ input:invalid ~ p {
     font-size: 20px !important;
   }
 
-  .register-page {
+  .reset-page {
     background-color: rgba(255, 255, 255, 0.6);
   }
 
-  .register-page__images--mb {
+  .reset-page__images--mb {
     display: block;
   }
 
-  .register-page__images--tl {
+  .reset-page__images--tl {
     display: none;
   }
 
-  .register-page__register-form {
+  .reset-page__reset-form {
     width: 100%;
     height: 100%;
     border-radius: 0px;
     background-color: rgba(255, 255, 255, 0);
   }
 
-  .register-page__register-form input {
+  .reset-page__reset-form input {
     padding: 12px 0 12px 12px;
   }
-  .register-page__register-form--padding {
+  .reset-page__reset-form--padding {
     padding: 24px 24px 0 24px;
   }
 }

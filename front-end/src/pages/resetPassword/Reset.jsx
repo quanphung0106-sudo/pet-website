@@ -13,9 +13,6 @@ export default function Register() {
   const [validatePassword, setValidatePassword] = useState(true);
 
   const params = useParams();
-
-  console.log("id", params.id);
-
   const password = useRef();
   const confirmPassword = useRef();
   const navigate = useNavigate();
@@ -40,7 +37,7 @@ export default function Register() {
     if (!checkValue || !checkValue.match(passwordRegex)) {
       passwordErrorElement.classList.add("error-message");
       passwordErrorElement.innerText =
-        "Password should be 8-19 characters and include at least 1 special character!";
+        "Mật khẩu phải có 8-19 ký tự và bao gồm ít nhất 1 ký tự đặc biệt!";
     } else {
       passwordErrorElement.classList.remove("error-message");
       passwordErrorElement.innerText = "";
@@ -57,15 +54,19 @@ export default function Register() {
         id: params.id,
         password: password.current.value,
       };
-      console.log(user);
-      try {
-        await axios.post(
-          "http://localhost:8800/api/auth/change-password",
-          user
-        );
-        navigate("/login");
-      } catch (err) {
-        console.log(err);
+      if (user.password === "") {
+        setValidatePassword(false);
+        console.log(user);
+      } else {
+        try {
+          await axios.post(
+            "http://localhost:8800/api/auth/change-password",
+            user
+          );
+          navigate("/login");
+        } catch (err) {
+          console.log(err);
+        }
       }
     }
   };
@@ -77,24 +78,8 @@ export default function Register() {
         className="rm-pd l-all-fsz s-all-fsz"
         style={{ height: "100vh" }}
       >
-        {/* <img
-          className="register-page__images--tl"
-          src="./assets/images/dog-6.jpg"
-          alt="register background tablet"
-        />
-        <img
-          className="register-page__images--mb"
-          src="./assets/images/dog-3.jpg"
-          alt="register background mobile"
-        /> */}
-          <img
-            className="reset-page__images"
-            src="./assets/images/background-signin-signup.jpg"
-            alt=""
-          />
         <Row className="reset-page rm-margin">
-          <Col className="rm-pd rm-col"></Col>
-          <Col className="d-flex justify-content-center align-items-center rm-pd rm-margin">
+          <Col className="reset-page--column">
             <Form
               onSubmit={handleSubmit}
               noValidate
@@ -178,7 +163,7 @@ export default function Register() {
                   >{`${
                     validatePassword
                       ? ""
-                      : "Password and confirm password does not match."
+                      : "Mật khẩu và mật khẩu xác nhận không trùng khớp."
                   }`}</p>
                 </Form.Group>
                 <Button

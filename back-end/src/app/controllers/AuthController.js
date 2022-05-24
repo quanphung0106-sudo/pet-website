@@ -22,7 +22,7 @@ const createUser = async (req, res) => {
       });
       await newUser.save();
       sendConfirmationEmail({ toUser: req.body }, newUser._id);
-      console.log({ toUser: req.body }, newUser._id);
+      // console.log({ toUser: req.body }, newUser._id);
       res.status(200).json(newUser);
     }
   } catch (err) {
@@ -47,7 +47,7 @@ const userLogin = async (req, res) => {
         res.status(200).json(user);
       }
     } else {
-      res.json("Tài khoản không tồn tại");
+      res.status(404).json("Tài khoản không tồn tại");
     }
   } catch (err) {
     res.status(500).json(err);
@@ -65,7 +65,7 @@ const resetPassword = async (req, res) => {
     } else {
       const user = await User.findOne({ email: req.body.email });
       sendResetPasswordEmail({ myUser: req.body }, user._id);
-      console.log({ myUser: req.body }, user._id);
+      // console.log({ myUser: req.body }, user._id);
       res.status(200).json(user);
     }
   } catch (err) {

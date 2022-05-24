@@ -27,7 +27,7 @@ export default function Login() {
       username: username.current.value,
       password: password.current.value,
     };
-    console.log(userInfo);
+    // console.log(userInfo);
     dispatch({ type: "LOGIN_START" });
     try {
       const res = await axios.post(
@@ -81,7 +81,9 @@ export default function Login() {
               className="login-page__register-form rm-br"
             >
               <div className="login-page__register-form--padding">
-                <h4 className="fw-b m-fsz" style={{marginBottom: '25px'}}>Welcome back!</h4>
+                <h4 className="fw-b m-fsz" style={{ marginBottom: "25px" }}>
+                  Welcome back!
+                </h4>
                 {/* <h3 className="fw-b m-fsz">Sign in to</h3>
                 <p className="fw-b m-fsz">Enjoy the moment.</p> */}
                 <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -136,11 +138,19 @@ export default function Login() {
                 >
                   Login
                 </Button>
-                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'flex-end'}} className="forgot">
-                  <Link to='/reset-password' style={{textDecoration: 'none', color: 'black'}}>
-                    <p className=" m-fsz-22">
-                      Forgot password?
-                    </p>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "flex-end",
+                  }}
+                  className="forgot"
+                >
+                  <Link
+                    to="/reset-password"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    <p className=" m-fsz-22">Forgot password?</p>
                   </Link>
                 </div>
                 <div className="login-page__register-form--bottom">

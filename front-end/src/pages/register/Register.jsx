@@ -22,8 +22,7 @@ export default function Register() {
   const navigate = useNavigate();
   //allow "_ -, number, letter and no allow whitespace,@,$..."
   const usernameRegex = /^(?=.*[a-z])[a-z0-9_-]{7,19}$/i;
-  const emailRegex =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const passwordRegex =
     /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,19}$/;
 
@@ -32,31 +31,6 @@ export default function Register() {
       setSignupFailure(true);
     } else {
       setSignupFailure(false);
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (password.current.value !== confirmPassword.current.value) {
-      setValidatePassword(false);
-    } else {
-      setValidatePassword(true);
-      const user = {
-        email: email.current.value,
-        username: username.current.value,
-        password: password.current.value,
-      };
-      if (!user) {
-        registerModalError("lỗi");
-      } else {
-        try {
-          await axios.post("http://localhost:8800/api/auth/register", user);
-          setAuthEmail(true);
-        } catch (err) {
-          console.log(err);
-          registerModalError(err);
-        }
-      }
     }
   };
 
@@ -113,6 +87,39 @@ export default function Register() {
     } else {
       passwordErrorElement.classList.remove("error-message");
       passwordErrorElement.innerText = "";
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (password.current.value !== confirmPassword.current.value) {
+      setValidatePassword(false);
+    } else {
+      setValidatePassword(true);
+      const user = {
+        email: email.current.value,
+        username: username.current.value,
+        password: password.current.value,
+      };
+      if (
+        !user.email === "" ||
+        !user.username === "" ||
+        !user.password === "" ||
+        !user.username.match(usernameRegex) ||
+        !user.email.match(emailRegex) ||
+        !user.password.match(passwordRegex)
+      ) {
+        setSignupFailure(true);
+        console.log(user);
+      } else {
+        try {
+          await axios.post("http://localhost:8800/api/auth/register", user);
+          setAuthEmail(true);
+        } catch (err) {
+          console.log(err);
+          registerModalError("lỗi");
+        }
+      }
     }
   };
 

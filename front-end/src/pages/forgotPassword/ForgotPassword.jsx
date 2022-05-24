@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import "./forgotPassword.css";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
+import RegisterModal from "../../components/registerModal/RegisterModal";
 
 export default function ForgotPassword() {
   const [authEmail, setAuthEmail] = useState(false);
@@ -99,6 +100,9 @@ export default function ForgotPassword() {
           </Col>
         </Row>
       </Container>
+      {authEmail && (
+        <RegisterModal authEmail={authEmail} setAuthEmail={setAuthEmail} />
+      )}
     </div>
   );
 }

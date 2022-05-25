@@ -85,6 +85,10 @@
   border-radius: 6px;
 }
 
+.register-text {
+  color: black;
+}
+
 .forgot {
   font-style: italic;
 }

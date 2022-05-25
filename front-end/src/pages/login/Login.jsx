@@ -94,6 +94,7 @@ export default function Login() {
                       className="br-6 m-all-fsz s-all-fsz"
                       required
                       ref={password}
+                      style={{height: '50px'}}
                     />
                     <div
                       className="position-absolute"
@@ -139,11 +140,11 @@ export default function Login() {
                     to="/reset-password"
                     style={{ textDecoration: "none", color: "black" }}
                   >
-                    <p className=" m-fsz-22">Forgot password?</p>
+                    <p className="register-text m-fsz-22">Forgot password?</p>
                   </Link>
                 </div>
                 <div className="login-page__register-form--bottom">
-                  <p className="text-center m-fsz-22">
+                  <p className="register-text text-center m-fsz-22">
                     Don't have an Account?{" "}
                     <span className="fw-b">
                       <Link

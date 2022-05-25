@@ -280,7 +280,10 @@ export default function Register() {
                 >
                   Register
                 </Button>
-                <p className="text-center mt-12 m-all-fsz">
+                <p
+                  className="register-text text-center mt-12 m-all-fsz"
+                  style={{ color: "black" }}
+                >
                   Already have an Account?{" "}
                   <span className="fw-b">
                     <Link

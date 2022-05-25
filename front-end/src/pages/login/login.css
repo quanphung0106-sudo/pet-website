@@ -85,6 +85,10 @@
   border-radius: 6px;
 }
 
+.register-text .forgot-password {
+  color: black;
+}
+
 .forgot {
   font-style: italic;
 }

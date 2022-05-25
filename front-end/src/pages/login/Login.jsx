@@ -139,11 +139,11 @@ export default function Login() {
                     to="/reset-password"
                     style={{ textDecoration: "none", color: "black" }}
                   >
-                    <p className=" m-fsz-22">Forgot password?</p>
+                    <p className="forgot-password m-fsz-22">Forgot password?</p>
                   </Link>
                 </div>
                 <div className="login-page__register-form--bottom">
-                  <p className="text-center m-fsz-22">
+                  <p className="text-center register-text m-fsz-22">
                     Don't have an Account?{" "}
                     <span className="fw-b">
                       <Link

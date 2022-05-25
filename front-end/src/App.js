@@ -35,6 +35,7 @@ function App() {
         path="/register"
         element={user ? <Navigate to="/" /> : <Register />}
       />
+      <Route exact path="/chocanh/:id" element={<SingleProductPage />} />
       <Route path="/api/auth/active-account" element={<AlertSuccess />} />
       <Route path="/api/auth/reset-password" element={<ResetSuccess />} />
     </Routes>

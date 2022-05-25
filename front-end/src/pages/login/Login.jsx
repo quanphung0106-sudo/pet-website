@@ -80,7 +80,7 @@ export default function Login() {
                   <Form.Control
                     className="br-6 m-all-fsz s-all-fsz"
                     type="text"
-                    placeholder="Enter your username/email"
+                    placeholder="Enter your username"
                     required
                     ref={username}
                   />

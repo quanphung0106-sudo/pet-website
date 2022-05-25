@@ -10,7 +10,7 @@ const Product = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/pet/cart-product/products_by_id?id=${path}`)
+      .get(`http://localhost:8800/pet/cart-product/products_by_id?id=${path}`)
       .then((res) => {
         setCats(res.data.productDetail);
       });

@@ -21,6 +21,8 @@ import "./assets/css/SeeMore.css";
 import "./assets/css/Banner.css";
 import "./assets/css/Information.css";
 import "./assets/css/Responsive.css";
+import "./assets/css/PageProductSingle/Product.css";
+import SingleProductPage from "./components/SingleProduct/SingleProductPage";
 
 function App() {
   const { user } = useContext(AuthContext);

@@ -23,24 +23,28 @@ import "./assets/css/Information.css";
 import "./assets/css/Responsive.css";
 import "./assets/css/PageProductSingle/Product.css";
 import SingleProductPage from "./components/SingleProduct/SingleProductPage";
+import ProductDetailState from "./components/HomePage/store/ProductDetail/ProductDetailState";
 
 function App() {
   const { user } = useContext(AuthContext);
 
   return (
-    <Routes>
-      <Route path="/" element={user ? <Home /> : <Login />} />
-      <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
-      <Route path="/reset-password" element={<ForgotPassword />} />
-      <Route path="/reset/:id" element={<Reset />} />
-      <Route
-        path="/register"
-        element={user ? <Navigate to="/" /> : <Register />}
-      />
-      <Route exact path="/chocanh/:id" element={<SingleProductPage />} />
-      <Route path="/api/auth/active-account" element={<AlertSuccess />} />
-      <Route path="/api/auth/reset-password" element={<ResetSuccess />} />
-    </Routes>
+    <ProductDetailState>
+      <Routes>
+        <Route path="/" element={user ? <Home /> : <Login />} />
+
+        <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
+        <Route path="/reset-password" element={<ForgotPassword />} />
+        <Route path="/reset/:id" element={<Reset />} />
+        <Route
+          path="/register"
+          element={user ? <Navigate to="/" /> : <Register />}
+        />
+        <Route exact path="/chocanh/:id" element={<SingleProductPage />} />
+        <Route path="/api/auth/active-account" element={<AlertSuccess />} />
+        <Route path="/api/auth/reset-password" element={<ResetSuccess />} />
+      </Routes>
+    </ProductDetailState>
   );
 }
 

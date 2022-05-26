@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const cloudinary = require("../../utils/cloudinary");
 const Pet = require("../models/pet");
+const ProductPKModel = require("../models/ProductPKModel");
 
 const GetAllPets = async (req, res) => {
   try {
@@ -131,6 +132,39 @@ const GetProductByID = async (req, res) => {
   }
 };
 
+
+// this is controler of Quang
+const postProductPK = async (req, res) => {
+  const { imgPK, namePK, descriptionPK, pricePK, vote } = req.body
+
+  if (!namePK) return res.status(400).json({ success: false, message: "Card must have name " });
+  try {
+    const newProductPK = new ProductPKModel({
+      namePK,
+      imgPK,
+      descriptionPK,
+      pricePK,
+      vote,
+    });
+    await newProductPK.save();
+    res.json({ success: true, message: "post thành công", post: newProductPK }); // post: CardProduct sử dụng bên gọi bên front
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "lỗi server" })
+  }
+};
+
+const getAllProductPK = async (req, res) => {
+  try {
+    const productPKs = await ProductPKModel.find();
+    res.status(200).json(productPKs);
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "lỗi server" })
+  }
+};
+
 module.exports = {
   PostPet,
   GetAllPets,
@@ -140,4 +174,6 @@ module.exports = {
   GetAllCats,
   GetAllFoods,
   GetProductByID,
+  postProductPK,
+  getAllProductPK
 };

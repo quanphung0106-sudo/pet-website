@@ -24,6 +24,8 @@ import "./assets/css/Responsive.css";
 import "./assets/css/PageProductSingle/Product.css";
 import SingleProductPage from "./components/SingleProduct/SingleProductPage";
 import ProductDetailState from "./components/HomePage/store/ProductDetail/ProductDetailState";
+import CatPage from "./pages/dogAndcatPage/CatPage";
+import DogPage from "./pages/dogAndcatPage/DogPage";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -43,6 +45,8 @@ function App() {
         <Route exact path="/chocanh/:id" element={<SingleProductPage />} />
         <Route path="/api/auth/active-account" element={<AlertSuccess />} />
         <Route path="/api/auth/reset-password" element={<ResetSuccess />} />
+        <Route path="/meocanh" element={<CatPage />}/>
+      <Route path="/chocanh" element={<DogPage />}/>
       </Routes>
     </ProductDetailState>
   );

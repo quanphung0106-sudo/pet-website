@@ -28,6 +28,10 @@ const UserSchema = new Schema(
     acctiveAccount: {
       type: Boolean,
     },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

@@ -178,7 +178,7 @@ export default function Register() {
                 >
                   Change Password
                 </Button>
-                <p className="text-center mt-12 m-all-fsz">
+                <p style={{color: 'black'}} className="text-center mt-12 m-all-fsz">
                   Already have an Account?{" "}
                   <span className="fw-b">
                     <Link

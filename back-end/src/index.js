@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const port = 8800;
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const route = require("./routes/index");
@@ -24,6 +25,7 @@ mongoose
   });
 
 //midleware
+app.use(cookieParser());
 app.use(express.json());
 app.use(helmet());
 app.use(
@@ -35,6 +37,7 @@ app.use(
 //Routes init
 route(app);
 app.use("/pet", petRoute);
+
 
 app.listen(port, () => {
   console.log(`Backend server is listening at http://localhost:${port}`);

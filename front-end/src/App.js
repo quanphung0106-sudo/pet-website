@@ -23,72 +23,33 @@ import "./assets/css/Information.css";
 import "./assets/css/Responsive.css";
 import "./assets/css/PageProductSingle/Product.css";
 import SingleProductPage from "./components/SingleProduct/SingleProductPage";
+import ProductDetailState from "./components/HomePage/store/ProductDetail/ProductDetailState";
+import CatPage from "./pages/dogAndcatPage/CatPage";
+import DogPage from "./pages/dogAndcatPage/DogPage";
 
 function App() {
   const { user } = useContext(AuthContext);
 
   return (
-    <Routes>
-      <Route path="/" element={user ? <Home /> : <Login />} />
-      <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
-      <Route path="/reset-password" element={<ForgotPassword />} />
-      <Route path="/reset/:id" element={<Reset />} />
-      <Route
-        path="/register"
-        element={user ? <Navigate to="/" /> : <Register />}
-      />
-      <Route exact path="/chocanh/:id" element={<SingleProductPage />} />
-      <Route path="/api/auth/active-account" element={<AlertSuccess />} />
-      <Route path="/api/auth/reset-password" element={<ResetSuccess />} />
-    </Routes>
+    <ProductDetailState>
+      <Routes>
+        <Route path="/" element={user ? <Home /> : <Login />} />
+
+        <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
+        <Route path="/reset-password" element={<ForgotPassword />} />
+        <Route path="/reset/:id" element={<Reset />} />
+        <Route
+          path="/register"
+          element={user ? <Navigate to="/" /> : <Register />}
+        />
+        <Route exact path="/chocanh/:id" element={<SingleProductPage />} />
+        <Route path="/api/auth/active-account" element={<AlertSuccess />} />
+        <Route path="/api/auth/reset-password" element={<ResetSuccess />} />
+        <Route path="/meocanh" element={<CatPage />}/>
+      <Route path="/chocanh" element={<DogPage />}/>
+      </Routes>
+    </ProductDetailState>
   );
 }
-
-// function App() {
-//   // const { user } = useContext(AuthContext);
-//   const [user, setUser] = useState(null);
-
-//   useEffect(() => {
-//     const getUser = () => {
-//       fetch("http://localhost:8800/api/auth/login/success", {
-//         method: "GET",
-//         credentials: "include",
-//         headers: {
-//           Accept: "application/json",
-//           "Content-Type": "application/json",
-//           "Access-Control-Allow-Credentials": true,
-//         },
-//       })
-//         .then((response) => {
-//           if (response.status === 200) return response.json();
-//           throw new Error("authentication has been failed!");
-//         })
-//         .then((resObject) => {
-//           setUser(resObject.user);
-//         })
-//         .catch((err) => {
-//           console.log(err);
-//         });
-//     };
-//     getUser();
-//   }, []);
-
-//   console.log(user);
-//   if (user !== null) {
-//     axios.post("http://localhost:8800/api/auth/register", user);
-//     console.log(user);
-//   }
-
-//   return (
-//     <Routes>
-//       <Route path="/" element={user ? <Home user={user} /> : <Login />} />
-//       <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
-//       <Route
-//         path="/register"
-//         element={user ? <Navigate to="/" /> : <Register />}
-//       />
-//     </Routes>
-//   );
-// }
 
 export default App;

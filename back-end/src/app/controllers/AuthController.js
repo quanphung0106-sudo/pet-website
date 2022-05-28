@@ -1,5 +1,7 @@
-const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+const User = require("../models/User");
 const { sendConfirmationEmail } = require("../../mailer");
 const { sendResetPasswordEmail } = require("../../resetPassword");
 
@@ -33,24 +35,36 @@ const createUser = async (req, res) => {
 };
 
 //[POST]: /api/auth/login
-const userLogin = async (req, res) => {
+const userLogin = async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.body.username });
     const validPassword = await bcrypt.compare(
       req.body.password,
       user.password
     );
-
-    console.log(user);
-
     if (user) {
-      console.log(user, user.password, req.body.password);
       if (user.acctiveAccount === false) {
         res.status(404).json("please active your email");
       } else if (!validPassword) {
-        res.status(404).json("wrong password");
+        res.status(404).json("Wrong password");
       } else {
-        res.status(200).json(user);
+        const token = jwt.sign(
+          {
+            id: user._id,
+            isAdmin: user.isAdmin,
+          },
+          process.env.JWT
+          // {
+          //   expiresIn: '30s'
+          // }
+        );
+        const { password, isAdmin, acctiveAccount, ...others } = user._doc;
+        res
+          .cookie("access_token", token, {
+            httpOnly: true,
+          })
+          .status(200)
+          .json({ ...others });
       }
     } else {
       res.status(404).json("Tài khoản không tồn tại");
@@ -61,7 +75,7 @@ const userLogin = async (req, res) => {
 };
 
 //[POST]: /api/auth/reset-password
-const resetPassword = async (req, res) => {
+const resetPassword = async (req, res, next) => {
   try {
     if (req.body.id) {
       const user = await User.findOneAndUpdate(
@@ -80,7 +94,7 @@ const resetPassword = async (req, res) => {
 };
 
 //[POST]: /api/auth/reset-password
-const changePassword = async (req, res) => {
+const changePassword = async (req, res, next) => {
   const salt = await bcrypt.genSalt(10);
   const hassPassword = await bcrypt.hash(req.body.password, salt);
   try {

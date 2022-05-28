@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
+const Token = require("../models/Token");
 const { sendConfirmationEmail } = require("../../mailer");
 const { sendResetPasswordEmail } = require("../../resetPassword");
 
@@ -53,11 +54,23 @@ const userLogin = async (req, res, next) => {
             id: user._id,
             isAdmin: user.isAdmin,
           },
-          process.env.JWT
-          // {
-          //   expiresIn: '30s'
-          // }
+          process.env.JWT,
+          {
+            expiresIn: "24h",
+          }
         );
+        const refreshToken = jwt.sign(
+          {
+            id: user._id,
+            isAdmin: user.isAdmin,
+          },
+          process.env.JWT_REFRESH_TOKEN
+        );
+        const newToken = new Token({
+          token: refreshToken,
+        });
+        await newToken.save();
+
         const { password, isAdmin, acctiveAccount, ...others } = user._doc;
         res
           .cookie("access_token", token, {
@@ -69,6 +82,70 @@ const userLogin = async (req, res, next) => {
     } else {
       res.status(404).json("Tài khoản không tồn tại");
     }
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+//[POST]: /api/auth/refresh-token/:id
+const refreshToken = async (req, res, next) => {
+  //get token from client request
+  const currentToken = req.body.token;
+  const user = await User.findById({ _id: req.params.id });
+  try {
+    if (!currentToken) res.status(401);
+
+    //get token from client request and check db
+    const tokenInModel = await Token.findOne({ token: req.body.token });
+    console.log(tokenInModel);
+    if (!tokenInModel) res.status(403);
+
+    jwt.verify(
+      currentToken,
+      process.env.JWT_REFRESH_TOKEN,
+      async (err, data) => {
+        if (err) res.status(403);
+
+        // await Token.findOneAndUpdate(
+        //   { token: req.body.token },
+        //   {
+        //     $pull: { _id: req.params.id },
+        //   }
+        // );
+        await Token.remove();
+
+        const accessToken = jwt.sign(
+          {
+            id: user._id,
+            isAdmin: user.isAdmin,
+          },
+          process.env.JWT,
+          {
+            expiresIn: "24h",
+          }
+        );
+        const newToken = new Token({
+          token: accessToken,
+        });
+        await newToken.save();
+
+        res
+          .cookie("access_token", accessToken, {
+            httpOnly: true,
+          })
+          .status(200)
+          .json({ currentToken, accessToken });
+      }
+    );
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+const getToken = async (req, res) => {
+  try {
+    const token = await Token.find();
+    res.status(200).json(token);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -116,6 +193,8 @@ const changePassword = async (req, res, next) => {
 module.exports = {
   createUser,
   userLogin,
+  refreshToken,
   resetPassword,
   changePassword,
+  getToken,
 };

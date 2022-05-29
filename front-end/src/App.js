@@ -32,29 +32,22 @@ import { useState } from "react";
 
 function App() {
   const { user } = useContext(AuthContext);
-  const [token, setToken] = useState("");
 
-  const nextday = new Date(86400000 + +new Date());
-
-  console.log(nextday);
-
-  useEffect(() => {
-    const resetToken = async () => {
-      if (nextday) {
-        try {
-          const res = await axios.post(
-            `http://localhost:8800/api/auth/refresh-token/${user._id}`,
-            user._id
-          );
-          setToken(res.data.accessToken);
-          console.log(res.data.accessToken);
-        } catch (err) {
-          console.log(err);
-        }
-      }
-    };
-    resetToken();
-  }, [user]);
+  // const nextday = new Date(86400000 + +new Date());
+  // useEffect(() => {
+  //   const resetToken = async () => {
+  //       try {
+  //         const res = await axios.post(
+  //           `http://localhost:8800/api/auth/refresh-token/${user._id}`,
+  //           user._id
+  //         );
+  //         console.log(res.data.accessToken);
+  //       } catch (err) {
+  //         console.log(err);
+  //       }
+  //   };
+  //   resetToken();
+  // }, [user]);
 
   // const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
   // function dayDifference(date1, date2) {

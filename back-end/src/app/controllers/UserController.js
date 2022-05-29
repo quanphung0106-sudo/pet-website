@@ -1,3 +1,4 @@
+const Token = require("../models/Token");
 const User = require("../models/User");
 
 //get all users
@@ -46,9 +47,34 @@ const deleteAllUsers = async (req, res, next) => {
   }
 };
 
+//delete all users
+//[DELETE]: /api/user/
+const logout = async (req, res, next) => {
+  const refreshToken = req.body.token;
+
+  //get token from client request and check db
+  const tokenInModel = await Token.findOne({ token: req.body.token });
+  try {
+    if (refreshToken === tokenInModel.token)
+      await Token.findOneAndUpdate(
+        { token: req.body.token },
+        {
+          $pull: { _id: req.params.id },
+        }
+      );
+    res.status(200).json({
+      refreshToken: refreshToken,
+      tokenInModel: tokenInModel,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 module.exports = {
   getUsers,
   updateUser,
   deleteUser,
   deleteAllUsers,
+  logout,
 };

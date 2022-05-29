@@ -56,7 +56,7 @@ const userLogin = async (req, res, next) => {
           },
           process.env.JWT,
           {
-            expiresIn: "24h",
+            expiresIn: "30s",
           }
         );
         const refreshToken = jwt.sign(
@@ -67,10 +67,15 @@ const userLogin = async (req, res, next) => {
           process.env.JWT_REFRESH_TOKEN
         );
         const newToken = new Token({
+          userId: user._id,
           token: refreshToken,
         });
         await newToken.save();
 
+        console.log({
+          token: token,
+          refreshToken: refreshToken,
+        });
         const { password, isAdmin, acctiveAccount, ...others } = user._doc;
         res
           .cookie("access_token", token, {
@@ -97,7 +102,7 @@ const refreshToken = async (req, res, next) => {
 
     //get token from client request and check db
     const tokenInModel = await Token.findOne({ token: req.body.token });
-    console.log(tokenInModel);
+    console.log("token in moddel:", tokenInModel);
     if (!tokenInModel) res.status(403);
 
     jwt.verify(
@@ -106,14 +111,6 @@ const refreshToken = async (req, res, next) => {
       async (err, data) => {
         if (err) res.status(403);
 
-        // await Token.findOneAndUpdate(
-        //   { token: req.body.token },
-        //   {
-        //     $pull: { _id: req.params.id },
-        //   }
-        // );
-        await Token.remove();
-
         const accessToken = jwt.sign(
           {
             id: user._id,
@@ -121,13 +118,13 @@ const refreshToken = async (req, res, next) => {
           },
           process.env.JWT,
           {
-            expiresIn: "24h",
+            expiresIn: "30s",
           }
         );
-        const newToken = new Token({
+
+        const newToken = await Token.updateOne({
           token: accessToken,
         });
-        await newToken.save();
 
         res
           .cookie("access_token", accessToken, {

@@ -8,5 +8,6 @@ router.get("/", verifyAdmin, UserController.getUsers);
 router.put("/:id", verifyUser, UserController.updateUser);
 router.delete("/:id", verifyAdmin, UserController.deleteUser);
 router.delete("/", verifyAdmin, UserController.deleteAllUsers);
+router.post("/logout", UserController.logout);
 
 module.exports = router;

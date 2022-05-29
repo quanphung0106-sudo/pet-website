@@ -48,17 +48,17 @@ const deleteAllUsers = async (req, res, next) => {
   }
 };
 
-//delete all users
-//[DELETE]: /api/user/logout
 const logout = async (req, res) => {
-  const freshToken = req.body.token;
+  const freshToken = req.body.refreshToken;
+  console.log("freshToken", freshToken);
   //get token from client request and check db
   try {
-    const tokenInModel = await Token.findOne({ token: req.body.token });
-    console.log({ freshToken: freshToken, tokenInModel: tokenInModel.token });
+    const tokenInModel = await Token.findOne({ userID: req.body.userId });
+    console.log({ freshToken: freshToken, tokenInModel: tokenInModel });
     if (freshToken === tokenInModel.token) {
       await Token.deleteOne({ token: freshToken });
       res.clearCookie("access_token");
+      console.log("Deleted token");
     }
     return res.status(200).json("Cleared all cookies");
   } catch (err) {

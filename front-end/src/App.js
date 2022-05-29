@@ -26,6 +26,7 @@ import SingleProductPage from "./components/SingleProduct/SingleProductPage";
 import ProductDetailState from "./components/HomePage/store/ProductDetail/ProductDetailState";
 import CatPage from "./pages/dogAndcatPage/CatPage";
 import DogPage from "./pages/dogAndcatPage/DogPage";
+import Doan from "./pages/doan/Doan";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
@@ -33,20 +34,20 @@ import { useState } from "react";
 function App() {
   const { user } = useContext(AuthContext);
 
-  useEffect(() => {
-    const query = async () => {
-      try {
-        const res = await axios.post(
-          `http://localhost:8800/api/auth/refresh-token/${user._id}`,
-          user._id
-        );
-        console.log(res.data.accessToken);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    query();
-  }, []);
+  // useEffect(() => {
+  //   const query = async () => {
+  //     try {
+  //       const res = await axios.post(
+  //         `http://localhost:8800/api/auth/refresh-token/${user._id}`,
+  //         user._id
+  //       );
+  //       console.log(res.data.accessToken);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   query();
+  // }, []);
 
   return (
     <ProductDetailState>
@@ -65,6 +66,7 @@ function App() {
         <Route path="/api/auth/reset-password" element={<ResetSuccess />} />
         <Route path="/meocanh" element={<CatPage />} />
         <Route path="/chocanh" element={<DogPage />} />
+        <Route path="/doan" element={<Doan />} />
       </Routes>
     </ProductDetailState>
   );

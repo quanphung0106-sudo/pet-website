@@ -56,7 +56,7 @@ const userLogin = async (req, res, next) => {
           },
           process.env.JWT,
           {
-            expiresIn: "24h",
+            expiresIn: "30s",
           }
         );
         const refreshToken = jwt.sign(
@@ -82,7 +82,7 @@ const userLogin = async (req, res, next) => {
             httpOnly: true,
           })
           .status(200)
-          .json({ ...others });
+          .json({ ...others, token, refreshToken });
       }
     } else {
       res.status(404).json("Tài khoản không tồn tại");
@@ -118,7 +118,7 @@ const refreshToken = async (req, res, next) => {
           },
           process.env.JWT,
           {
-            expiresIn: "24h",
+            expiresIn: "30s",
           }
         );
 

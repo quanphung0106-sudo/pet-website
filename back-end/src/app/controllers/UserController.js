@@ -1,3 +1,4 @@
+const { deleteOne } = require("../models/Token");
 const Token = require("../models/Token");
 const User = require("../models/User");
 
@@ -48,26 +49,20 @@ const deleteAllUsers = async (req, res, next) => {
 };
 
 //delete all users
-//[DELETE]: /api/user/
-const logout = async (req, res, next) => {
-  const refreshToken = req.body.token;
-
+//[DELETE]: /api/user/logout
+const logout = async (req, res) => {
+  const freshToken = req.body.token;
   //get token from client request and check db
-  const tokenInModel = await Token.findOne({ token: req.body.token });
   try {
-    if (refreshToken === tokenInModel.token)
-      await Token.findOneAndUpdate(
-        { token: req.body.token },
-        {
-          $pull: { _id: req.params.id },
-        }
-      );
-    res.status(200).json({
-      refreshToken: refreshToken,
-      tokenInModel: tokenInModel,
-    });
+    const tokenInModel = await Token.findOne({ token: req.body.token });
+    console.log({ freshToken: freshToken, tokenInModel: tokenInModel.token });
+    if (freshToken === tokenInModel.token) {
+      await Token.deleteOne({ token: freshToken });
+      res.clearCookie("access_token");
+    }
+    return res.status(200).json("Cleared all cookies");
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
 };
 

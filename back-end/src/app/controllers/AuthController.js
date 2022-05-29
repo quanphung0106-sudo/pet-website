@@ -56,7 +56,7 @@ const userLogin = async (req, res, next) => {
           },
           process.env.JWT,
           {
-            expiresIn: "30s",
+            expiresIn: "24h",
           }
         );
         const refreshToken = jwt.sign(
@@ -118,7 +118,7 @@ const refreshToken = async (req, res, next) => {
           },
           process.env.JWT,
           {
-            expiresIn: "30s",
+            expiresIn: "24h",
           }
         );
 

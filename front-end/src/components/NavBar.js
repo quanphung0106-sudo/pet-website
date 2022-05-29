@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../assets/img/Logo.jpg";
@@ -5,7 +6,8 @@ import { AuthContext } from "../context/AuthContext";
 
 const NavBar = () => {
   const { user, dispatch } = useContext(AuthContext);
-  const logout = () => {
+  const logout = async () => {
+    await axios.post("http://localhost:8800/api/users/logout", user._id);
     dispatch({ type: "LOGOUT_SUCCESS", payload: window.localStorage.clear() });
   };
   return (

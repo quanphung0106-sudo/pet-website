@@ -6,7 +6,6 @@ import "./login.css";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import { CircularProgress } from "@mui/material";
-import GoogleIcon from "@mui/icons-material/Google";
 import LoginModal from "../../components/loginModal/LoginModal";
 // import GitHubIcon from "@mui/icons-material/GitHub";
 
@@ -17,6 +16,9 @@ export default function Login() {
   const username = useRef();
   const password = useRef();
   const { user, dispatch, isFetching } = useContext(AuthContext);
+
+  console.log(user?._id);
+
   const hideOrShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -94,7 +96,7 @@ export default function Login() {
                       className="br-6 m-all-fsz s-all-fsz"
                       required
                       ref={password}
-                      style={{height: '50px'}}
+                      style={{ height: "50px" }}
                     />
                     <div
                       className="position-absolute"

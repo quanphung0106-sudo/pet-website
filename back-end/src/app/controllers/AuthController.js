@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const { sendConfirmationEmail } = require("../../mailer");
 const { sendResetPasswordEmail } = require("../../resetPassword");
+const Token = require("../models/Token");
 
 //[POST]: /api/auth/register
 const createUser = async (req, res) => {
@@ -34,6 +35,29 @@ const createUser = async (req, res) => {
   }
 };
 
+const generateAccessToken = (user) => {
+  return jwt.sign(
+    {
+      id: user._id,
+      isAdmin: user.isAdmin,
+    },
+    process.env.JWT,
+    {
+      expiresIn: "30s",
+    }
+  );
+};
+const generateRefreshToken = (user) => {
+  const refreshToken = jwt.sign(
+    {
+      id: user._id,
+      isAdmin: user.isAdmin,
+    },
+    process.env.JWT_REFRESH_TOKEN
+  );
+  return refreshToken;
+};
+
 //[POST]: /api/auth/login
 const userLogin = async (req, res, next) => {
   try {
@@ -48,23 +72,22 @@ const userLogin = async (req, res, next) => {
       } else if (!validPassword) {
         res.status(404).json("Wrong password");
       } else {
-        const token = jwt.sign(
-          {
-            id: user._id,
-            isAdmin: user.isAdmin,
-          },
-          process.env.JWT
-          // {
-          //   expiresIn: '30s'
-          // }
-        );
+        const token = generateAccessToken(user);
+        const refreshToken = generateRefreshToken(user);
+
+        const newToken = new Token({
+          userId: user._id,
+          token: refreshToken,
+        });
+        await newToken.save();
+
+        console.log({
+          token: token,
+          refreshToken: refreshToken,
+        });
+
         const { password, isAdmin, acctiveAccount, ...others } = user._doc;
-        res
-          .cookie("access_token", token, {
-            httpOnly: true,
-          })
-          .status(200)
-          .json({ ...others });
+        res.status(200).json({ ...others, token });
       }
     } else {
       res.status(404).json("Tài khoản không tồn tại");
@@ -72,6 +95,34 @@ const userLogin = async (req, res, next) => {
   } catch (err) {
     res.status(500).json(err);
   }
+};
+
+//[POST]: /api/auth/refresh-token/:id
+const refreshToken = async (req, res, next) => {
+  //take refresh token and userID from user
+  const refreshToken = req.body.token;
+  const user = await User.findById({ _id: req.params.id });
+
+  //send error
+  if (!refreshToken) res.status(401).json("Bạn không có quyền");
+
+  //check token in db
+  const tokenInModel = await Token.findOne({ token: req.body.token });
+  console.log("token in model:", tokenInModel);
+  if (!tokenInModel) res.status(403);
+
+  //if refresh token exists, create new token
+  jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN, async (err, data) => {
+    if (err) res.status(403);
+
+    const token = generateAccessToken(user);
+
+    const newToken = await Token.updateOne({
+      token: token,
+    });
+
+    res.status(200).json({ refreshToken, token });
+  });
 };
 
 //[POST]: /api/auth/reset-password
@@ -118,4 +169,5 @@ module.exports = {
   userLogin,
   resetPassword,
   changePassword,
+  refreshToken,
 };

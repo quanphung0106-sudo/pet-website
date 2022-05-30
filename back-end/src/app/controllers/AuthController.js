@@ -39,6 +39,7 @@ const createUser = async (req, res) => {
 const userLogin = async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.body.username });
+    console.log("login user: ", req.body);
     const validPassword = await bcrypt.compare(
       req.body.password,
       user.password
@@ -88,6 +89,7 @@ const userLogin = async (req, res, next) => {
       res.status(404).json("Tài khoản không tồn tại");
     }
   } catch (err) {
+    console.log("error 500:", err);
     res.status(500).json(err);
   }
 };

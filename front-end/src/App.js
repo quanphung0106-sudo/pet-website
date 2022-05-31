@@ -78,7 +78,6 @@ function App() {
     <ProductDetailState>
       <Routes>
         <Route path="/" element={user ? <Home /> : <Login />} />
-
         <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
         <Route path="/reset-password" element={<ForgotPassword />} />
         <Route path="/reset/:id" element={<Reset />} />

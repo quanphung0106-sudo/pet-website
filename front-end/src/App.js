@@ -27,27 +27,52 @@ import ProductDetailState from "./components/HomePage/store/ProductDetail/Produc
 import CatPage from "./pages/dogAndcatPage/CatPage";
 import DogPage from "./pages/dogAndcatPage/DogPage";
 import Doan from "./pages/doan/Doan";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { useState } from "react";
+import jwt_decode from "jwt-decode";
 
 function App() {
-  const { user } = useContext(AuthContext);
+  const { user, dispatch } = useContext(AuthContext);
+  let axiosJWT = axios.create();
 
-  // useEffect(() => {
-  //   const query = async () => {
-  //     try {
-  //       const res = await axios.post(
-  //         `http://localhost:8800/api/auth/refresh-token/${user._id}`,
-  //         user._id
-  //       );
-  //       console.log(res.data.accessToken);
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   query();
-  // }, []);
+  const refreshToken = async () => {
+    axios.defaults.withCredentials = true;
+    try {
+      const res = await axios.post(
+        "http://localhost:8800/api/auth/refresh-token",
+        null,
+        {
+          withCredentials: true,
+        }
+      );
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  axiosJWT.interceptors.request.use(
+    async (config) => {
+      const token = user.accessToken;
+      let date = new Date();
+      const decodeToken = jwt_decode(token);
+      if (decodeToken.exp < date.getTime() / 1000) {
+        const data = await refreshToken();
+        console.log(data);
+        if (data.newAccessToken) {
+          dispatch({
+            type: "SAVE_NEW_ACCESS_TOKEN",
+            payload: data.newAccessToken,
+          });
+          config.headers["Authorization"] = data.newAccessToken;
+        }
+      }
+      return config;
+    },
+    (err) => {
+      return Promise.reject(err);
+    }
+  );
 
   return (
     <ProductDetailState>
@@ -66,7 +91,7 @@ function App() {
         <Route path="/api/auth/reset-password" element={<ResetSuccess />} />
         <Route path="/meocanh" element={<CatPage />} />
         <Route path="/chocanh" element={<DogPage />} />
-        <Route path="/doan" element={<Doan />} />
+        <Route path="/doan" element={<Doan axiosJWT={axiosJWT} />} />
       </Routes>
     </ProductDetailState>
   );

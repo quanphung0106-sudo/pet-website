@@ -5,30 +5,28 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-const Doan = () => {
+const Doan = ({ axiosJWT }) => {
   const { user, dispatch, isFetching } = useContext(AuthContext);
   const [error, setError] = useState("");
   const [data, setData] = useState();
 
-  console.log(user.refreshToken);
-
   const navigate = useNavigate();
 
   const logout = async () => {
-    await axios.post(
-      "http://localhost:8800/api/users/logout",
-      user?.refreshToken
-    );
+    await axios.post("http://localhost:8800/api/auth/logout");
     dispatch({ type: "LOGOUT_SUCCESS", payload: window.localStorage.clear() });
     navigate("/login");
   };
   console.log(user);
   const handleClick = async () => {
     try {
-      const res = await axios.get("http://localhost:8800/api/users");
+      const res = await axiosJWT.get("http://localhost:8800/api/users", {
+        headers: { Authorization: user.accessToken },
+      });
       console.log(res.data);
     } catch (err) {
-      if (err.response.status === 401) {
+      console.log(err);
+      if (err.response.status === 403) {
         setError("Bạn không có quyền");
       }
     }

@@ -7,7 +7,6 @@ import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 import { CircularProgress } from "@mui/material";
 import LoginModal from "../../components/loginModal/LoginModal";
-import Cookies from "universal-cookie";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,6 +15,7 @@ export default function Login() {
   const username = useRef();
   const password = useRef();
   const { user, dispatch, isFetching } = useContext(AuthContext);
+  axios.defaults.withCredentials = true;
 
   const hideOrShowPassword = () => {
     setShowPassword(!showPassword);
@@ -34,9 +34,6 @@ export default function Login() {
         userInfo
       );
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
-      const cookies = new Cookies();
-      cookies.set("access_token", res.data.token, { path: "/" });
-      cookies.set("refresh-token", res.data.refreshToken, { path: "/" });
     } catch (err) {
       dispatch({ type: "LOGIN_FAILURE", payload: err });
       setLoginFailure(true);

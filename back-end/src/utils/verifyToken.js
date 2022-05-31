@@ -1,7 +1,9 @@
 const jwt = require("jsonwebtoken");
 
 exports.verifyToken = function (req, res, next) {
-  const token = req.cookies.access_token;
+  const token = req.header("Authorization");
+  // const token = req.cookies.access_token;
+  console.log("token verify: ", token);
   if (!token) {
     return res.status(401).json("You are not authentication");
   }

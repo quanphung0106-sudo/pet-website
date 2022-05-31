@@ -35,6 +35,32 @@ const createUser = async (req, res) => {
   }
 };
 
+const generateAccessToken = (user) => {
+  return jwt.sign(
+    {
+      id: user._id || user.id,
+      isAdmin: user.isAdmin,
+    },
+    process.env.JWT,
+    {
+      expiresIn: "1h",
+    }
+  );
+};
+
+const generateRefreshToken = (user) => {
+  return jwt.sign(
+    {
+      id: user._id || user.id,
+      isAdmin: user.isAdmin,
+    },
+    process.env.JWT_REFRESH_TOKEN,
+    {
+      expiresIn: "7d",
+    }
+  );
+};
+
 //[POST]: /api/auth/login
 const userLogin = async (req, res, next) => {
   try {
@@ -50,23 +76,8 @@ const userLogin = async (req, res, next) => {
       } else if (!validPassword) {
         res.status(404).json("Wrong password");
       } else {
-        const token = jwt.sign(
-          {
-            id: user._id,
-            isAdmin: user.isAdmin,
-          },
-          process.env.JWT,
-          {
-            expiresIn: "30s",
-          }
-        );
-        const refreshToken = jwt.sign(
-          {
-            id: user._id,
-            isAdmin: user.isAdmin,
-          },
-          process.env.JWT_REFRESH_TOKEN
-        );
+        const accessToken = generateAccessToken(user);
+        const refreshToken = generateRefreshToken(user);
         const newToken = new Token({
           userId: user._id,
           token: refreshToken,
@@ -74,16 +85,20 @@ const userLogin = async (req, res, next) => {
         await newToken.save();
 
         console.log({
-          token: token,
+          accessToken: accessToken,
           refreshToken: refreshToken,
         });
         const { password, isAdmin, acctiveAccount, ...others } = user._doc;
-        res
-          .cookie("access_token", token, {
-            httpOnly: true,
-          })
-          .status(200)
-          .json({ ...others, token, refreshToken });
+
+        res.cookie("refresh_token", refreshToken, {
+          httpOnly: true,
+          maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+          sameSite: "strict",
+          secure: false,
+          path: "/",
+        });
+
+        return res.status(200).json({ ...others, accessToken });
       }
     } else {
       res.status(404).json("Tài khoản không tồn tại");
@@ -94,48 +109,72 @@ const userLogin = async (req, res, next) => {
   }
 };
 
-//[POST]: /api/auth/refresh-token/:id
+//[POST]: /api/auth/refresh-token
 const refreshToken = async (req, res, next) => {
-  //get token from client request
-  const currentToken = req.body.token;
-  const user = await User.findById({ _id: req.params.id });
   try {
-    if (!currentToken) res.status(401);
+    // const user = await User.findById({ _id: req.params.userId });
+    //get rf cookie
 
-    //get token from client request and check db
-    const tokenInModel = await Token.findOne({ token: req.body.token });
-    console.log("token in moddel:", tokenInModel);
-    if (!tokenInModel) res.status(403);
-
+    // rf cookie === rf cookie db
+    const refreshToken = req.cookies.refresh_token;
     jwt.verify(
-      currentToken,
+      refreshToken,
       process.env.JWT_REFRESH_TOKEN,
-      async (err, data) => {
-        if (err) res.status(403);
+      async (err, user) => {
+        console.log("hello user: ", user);
+        if (user.id) {
+          const tokens = await Token.find({ userId: user.id });
+          const isCheckToken = tokens.some(
+            (token) => token.token === refreshToken
+          );
 
-        const accessToken = jwt.sign(
-          {
-            id: user._id,
-            isAdmin: user.isAdmin,
-          },
-          process.env.JWT,
-          {
-            expiresIn: "30s",
+          console.log({
+            tokens: tokens,
+            refreshToken: refreshToken,
+          });
+
+          if (!isCheckToken) {
+            return res.status(403).json({ msg: "refresh token is not valid!" });
           }
-        );
 
-        const newToken = await Token.updateOne({
-          token: accessToken,
-        });
+          const newAccessToken = generateAccessToken(user);
+          const newRefreshToken = generateRefreshToken(user);
 
-        res
-          .cookie("access_token", accessToken, {
+          const newToken = new Token({
+            userId: user.id,
+            token: newRefreshToken,
+          });
+          await newToken.save();
+
+          res.cookie("refresh_token", newRefreshToken, {
             httpOnly: true,
-          })
-          .status(200)
-          .json({ currentToken, accessToken });
+            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+            sameSite: "strict",
+            secure: false,
+            path: "/",
+          });
+
+          return res.status(200).json({
+            newRefreshToken: newRefreshToken,
+            newAccessToken: newAccessToken,
+          });
+        } else {
+          res.status(403).json("Fresh token bị lỗi");
+        }
       }
     );
+    if (!refreshToken) res.status(404).json("Errorrrrr");
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+};
+
+//[POST]: /api/auth/logout
+const logout = async (req, res) => {
+  try {
+    res.clearCookie("refresh_token", { path: "/" });
+    return res.status(200).json({ msg: "logout sucsses" });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -196,4 +235,5 @@ module.exports = {
   resetPassword,
   changePassword,
   getToken,
+  logout,
 };

@@ -7,7 +7,7 @@ import { AuthContext } from "../context/AuthContext";
 const NavBar = () => {
   const { user, dispatch } = useContext(AuthContext);
   const logout = async () => {
-    await axios.post("http://localhost:8800/api/users/logout", user._id);
+    await axios.post("http://localhost:8800/api/auth/logout");
     dispatch({ type: "LOGOUT_SUCCESS", payload: window.localStorage.clear() });
   };
   return (

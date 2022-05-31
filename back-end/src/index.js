@@ -25,19 +25,29 @@ mongoose
   });
 
 //midleware
-app.use(cookieParser());
 app.use(express.json());
 app.use(helmet());
 app.use(
   cors({
-    origin: true,
     credentials: true,
+    origin: "http://localhost:3000",
   })
 );
+app.use(cookieParser());
+
+app.use(function (req, res, next) {
+  res.header("Content-Type", "application/json;charset=UTF-8");
+  res.header("Access-Control-Allow-Credentials", true);
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
 //Routes init
 route(app);
 app.use("/pet", petRoute);
-
 
 app.listen(port, () => {
   console.log(`Backend server is listening at http://localhost:${port}`);

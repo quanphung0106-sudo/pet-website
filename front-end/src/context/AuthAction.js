@@ -10,3 +10,8 @@ export const LoginSuccess = (user) => ({
 export const LoginFailure = () => ({
   type: "LOGIN_FAILURE",
 });
+
+export const saveNewAccessToken = (token) => ({
+  type: "SAVE_NEW_ACCESS_TOKEN",
+  payload: token,
+});

@@ -24,6 +24,19 @@ const AuthReducer = (state, action) => {
         isFetching: false,
         error: false,
       };
+    case "SAVE_NEW_ACCESS_TOKEN":
+      console.log({
+        state: state,
+        user: state.user,
+        action: action.payload,
+      });
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          accessToken: action.payload,
+        },
+      };
     default:
       return state;
   }

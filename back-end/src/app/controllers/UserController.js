@@ -1,3 +1,5 @@
+const { deleteOne } = require("../models/Token");
+const Token = require("../models/Token");
 const User = require("../models/User");
 
 //get all users
@@ -45,7 +47,6 @@ const deleteAllUsers = async (req, res, next) => {
     res.status(500).json(err);
   }
 };
-
 module.exports = {
   getUsers,
   updateUser,

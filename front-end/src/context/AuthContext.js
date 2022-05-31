@@ -7,18 +7,6 @@ const INITIAL_STATE = {
   error: false,
 };
 
-// const INITIAL_STATE = {
-//   user: {
-//     user: JSON.parse(localStorage.getItem("user")) || null,
-//     isFetching: false,
-//     error: false,
-//   },
-//   products: {
-//     products: [],
-//     quantity: 0,
-//   }
-// };
-
 export const AuthContext = createContext(INITIAL_STATE);
 
 export const AuthContextProvider = ({ children }) => {

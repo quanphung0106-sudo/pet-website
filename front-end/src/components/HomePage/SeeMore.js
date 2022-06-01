@@ -1,9 +1,13 @@
 import React from "react";
 
-const SeeMore = () => {
+const SeeMore = (props) => {
   return (
     <div className="container" id="seemore">
-      <button type="button" className="btn btn-primary seemore-btn">
+      <button
+        onClick={props.onClick}
+        type="button"
+        className="btn btn-primary seemore-btn"
+      >
         Xem Thêm
       </button>
     </div>

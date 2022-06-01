@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import DataBonus from "../../assets/api/DataBonus";
 import DataInformations from "../../assets/api/DataInformation";
 import DataTitles from "../../assets/api/DataTitle";
@@ -19,6 +19,17 @@ import { ProductDetailContext } from "./store/Context";
 const PageBonus = () => {
   const { ProductDog, ProductCat, ProductFood } =
     useContext(ProductDetailContext);
+
+  const [limit, setlimit] = useState(4);
+
+  const handleSeeMore = () => {
+    console.log(ProductDog.length);
+    if (limit > ProductDog.length) {
+      alert("Tạm Thời Hết Hàng");
+    } else {
+      setlimit((pre) => pre + 4);
+    }
+  };
 
   return (
     <div>
@@ -42,7 +53,7 @@ const PageBonus = () => {
       ))}
       <div className="container">
         <div className="row">
-          {ProductDog.map((listdog) => (
+          {ProductDog.slice(0, limit).map((listdog) => (
             <Cart
               key={listdog._id}
               productid={listdog._id}
@@ -54,7 +65,7 @@ const PageBonus = () => {
           ))}
         </div>
       </div>
-      <SeeMore />
+      <SeeMore onClick={handleSeeMore} />
       <Image />
       {DataTitleCats.DataTitleCat.map((listTitle) => (
         <Title key={listTitle.id} title={listTitle.title} />

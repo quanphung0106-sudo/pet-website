@@ -29,7 +29,7 @@ const Product = () => {
               <div className="product-line"></div>
               <div className="product-list">
                 <div className="product-single">
-                  const {PKTT} = useContext(ProductDetailContext);
+                  
                   <div className="product-single">
                     {PKTT.map((lists) => (
                       <div className="row">

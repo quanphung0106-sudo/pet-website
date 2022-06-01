@@ -70,7 +70,7 @@ const NavBar = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="lienhe" className="nav-link">
+                  <Link to="/lienhe" className="nav-link">
                     Liên Hệ
                   </Link>
                 </li>

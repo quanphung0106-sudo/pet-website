@@ -9,7 +9,7 @@ import AlertSuccess from "./components/aleartSuccess/AlertSuccess";
 import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import Reset from "./pages/resetPassword/Reset";
 import ResetSuccess from "./components/alertResetSuccess/ResetSuccess";
-
+import CSKH from "./pages/cskh/cskh";
 // css HomePage
 
 import "./assets/css/NavBar.css";
@@ -23,13 +23,14 @@ import "./assets/css/Information.css";
 import "./assets/css/Responsive.css";
 import "./assets/css/PageProductSingle/Product.css";
 import SingleProductPage from "./components/SingleProduct/SingleProductPage";
-import ProductDetailState from "./components/HomePage/store/ProductDetail/ProductDetailState";
+
 import CatPage from "./pages/dogAndcatPage/CatPage";
 import DogPage from "./pages/dogAndcatPage/DogPage";
 import Doan from "./pages/doan/Doan";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
+import ProductDetailState from "./components/HomePage/store/ProductDetail/ProductDetailState";
 
 function App() {
   const { user, dispatch } = useContext(AuthContext);
@@ -81,6 +82,7 @@ function App() {
         <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
         <Route path="/reset-password" element={<ForgotPassword />} />
         <Route path="/reset/:id" element={<Reset />} />
+        <Route path="/lienhe" element={<CSKH/>} />
         <Route
           path="/register"
           element={user ? <Navigate to="/" /> : <Register />}

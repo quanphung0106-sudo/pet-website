@@ -9,7 +9,7 @@ const route = require("./routes/index");
 const cors = require("cors");
 
 const petRoute = require("./routes/petroutes");
-
+const inforRoute = require("./routes/Inforrouter");
 dotenv.config();
 
 mongoose
@@ -27,6 +27,7 @@ mongoose
 //midleware
 app.use(express.json());
 app.use(helmet());
+app.use(cors());
 app.use(
   cors({
     credentials: true,
@@ -48,6 +49,7 @@ app.use(function (req, res, next) {
 //Routes init
 route(app);
 app.use("/pet", petRoute);
+app.use("/information", inforRoute);
 
 app.listen(port, () => {
   console.log(`Backend server is listening at http://localhost:${port}`);

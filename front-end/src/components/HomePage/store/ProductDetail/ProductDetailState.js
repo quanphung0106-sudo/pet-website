@@ -6,6 +6,9 @@ export default function ProductDetailState({ children }) {
   const [dog, setDog] = useState([]);
   const [cat, setCat] = useState([]);
   const [food, setFoods] = useState([]);
+  const [ProductDetail, setProduct] = useState([]);
+
+
 
   useEffect(() => {
     axios
@@ -25,6 +28,11 @@ export default function ProductDetailState({ children }) {
       .then((datas) => setFoods(datas.data));
   }, []);
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8800/information/infor`)
+      .then((datas) => setProduct(datas.data));
+  }, []);
   return (
     <>
       <ProductDetailContext.Provider
@@ -32,6 +40,7 @@ export default function ProductDetailState({ children }) {
           ProductDog: dog,
           ProductCat: cat,
           ProductFood: food,
+          ProductDetail: ProductDetail,
         }}
       >
         {children}

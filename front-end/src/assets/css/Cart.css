@@ -5,6 +5,10 @@
   margin-bottom: 20px;
 }
 
+a{
+  text-decoration: none;
+}
+
 #cart .cart-header {
   overflow: hidden;
 }

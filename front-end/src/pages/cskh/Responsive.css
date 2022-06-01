@@ -1,4 +1,4 @@
-/*PC */
+PC
 .container-fluid{
     float: left;
     background-color: lightblue;
@@ -8,7 +8,7 @@
     margin-top: 50px;
     margin-left: 50px;
     width: 100%;
-    
+
 }
 
 
@@ -37,12 +37,12 @@
 }
 
 
-    
+
 
 /* Tablet*/
 
 @media (min-width: 740px) and (max-width: 1023px) {
-  
+
     .anh1{
         width: 400px;
         height: 350px;

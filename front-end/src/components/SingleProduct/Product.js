@@ -1,8 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { ProductDetailContext } from "../HomePage/store/Context";
 
 const Product = () => {
+  const { PKTT } = useContext(ProductDetailContext);
   const [cart, setCats] = useState([]);
   const location = useLocation();
   console.log(location);
@@ -27,22 +29,25 @@ const Product = () => {
               <div className="product-line"></div>
               <div className="product-list">
                 <div className="product-single">
-                  <div className="row">
-                    <div div className="col-xl-4 col-md-3 col-sm-12">
-                      <img
-                        src="http://mauweb.monamedia.net/dogcatshop/wp-content/uploads/2018/04/14-1.jpg"
-                        alt=""
-                        className="product-img"
-                      />
-                    </div>
-                    <div className="col-xl-8 col-md-9 col-sm-12">
-                      <p className="product-content">
-                        Túi Nylon Trung ( Ngựa vằn )
-                      </p>
-                      <b className="product-price">452,000 ₫</b>
-                    </div>
+                  const {PKTT} = useContext(ProductDetailContext);
+                  <div className="product-single">
+                    {PKTT.map((lists) => (
+                      <div className="row">
+                        <div div className="col-xl-4 col-md-3 col-sm-12">
+                          <img
+                            src={lists.imgPK}
+                            alt=""
+                            className="product-img"
+                          />
+                        </div>
+                        <div className="col-xl-8 col-md-9 col-sm-12">
+                          <p className="product-content">{lists.namePK}</p>
+                          <b className="product-price">{lists.pricePK} ₫</b>
+                        </div>
+                        <hr className="divider" />
+                      </div>
+                    ))}
                   </div>
-                  <hr className="divider" />
                 </div>
               </div>
             </div>

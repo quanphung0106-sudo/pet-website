@@ -8,6 +8,10 @@ export default function ProductDetailState({ children }) {
   const [food, setFoods] = useState([]);
   const [ProductDetail, setProduct] = useState([]);
 
+  const [PKTT, setPKTT] = useState([]);
+  
+   
+
 
 
   useEffect(() => {
@@ -33,6 +37,13 @@ export default function ProductDetailState({ children }) {
       .get(`http://localhost:8800/information/infor`)
       .then((datas) => setProduct(datas.data));
   }, []);
+
+  
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8800/pet/product-Phu-Kien`)
+      .then((datas) => setPKTT(datas.data));
+  }, []);
   return (
     <>
       <ProductDetailContext.Provider
@@ -41,6 +52,7 @@ export default function ProductDetailState({ children }) {
           ProductCat: cat,
           ProductFood: food,
           ProductDetail: ProductDetail,
+          PKTT: PKTT,
         }}
       >
         {children}

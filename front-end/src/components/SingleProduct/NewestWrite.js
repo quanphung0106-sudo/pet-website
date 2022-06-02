@@ -60,11 +60,9 @@ const NewestWrite = () => {
 
             <section id="content3">
               <ul>
-                <li>Chính sách bảo hành của riêng mỗi hãng:</li>
-                <li>CASIO: Bảo hành chính hãng máy 1 năm, pin 1,5 năm</li>
-                <li>
-                  CITIZEN: Bảo hành chính hãng toàn cầu máy 1 năm, pin 1 năm
-                </li>
+                <li>Nuôi sinh sản thú cưng không chỉ dừng lại ở những người nuôi có kinh nghiệm, dân chơi chuyên nghiệp. </li>
+                <li>Mà trên thực tế với sự chuyển giao công nghệ tiên tiến nhất ở VN, Giám sát bởi những chuyên gia , kĩ sư hàng đầu của CTY TNHH Thú Kiểng VN cùng sự cố vấn về chuyên môn của các Nhà khoa học về phương pháp. </li>
+                <li>Và Trên hết là sự chăm chỉ và tận tâm của những người nông dân một nắng hai sương, chăm sóc những bầy cún đạt tiêu chuẩn về sức khỏe.</li>           
               </ul>
             </section>
           </div>

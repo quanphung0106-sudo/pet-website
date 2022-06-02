@@ -1,5 +1,7 @@
 /*PC */
-
+.containerinfor{
+    float: left;
+}
 .card-img-top{
     height: 390px;
 }

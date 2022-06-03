@@ -172,7 +172,7 @@ const PageBonus = () => {
       {DataTitleInfos.DataTitleInfo.map((listTitle) => (
         <Title key={listTitle.id} title={listTitle.title} />
       ))}
-      <div className="container">
+      <div className="container" style={{ marginLeft: "15px" }}>
         <div className="row">
           {DataInformations.DataInformation.map((listInfor) => (
             <Information

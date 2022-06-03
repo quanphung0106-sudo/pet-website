@@ -61,6 +61,9 @@ transform: scale(1.2);
 #card {
   position: relative;
 }
+.card-img-top{
+  height: 260px;
+}
 
 .icon-plus {
   position: absolute;

@@ -26,6 +26,7 @@
 /*  */
 #list-product{
   border: 1px solid #ccc;
+  margin-bottom: 20px;
 }
 
 #list-product li {
@@ -60,9 +61,6 @@ transform: scale(1.2);
 
 #card {
   position: relative;
-}
-.card-img-top{
-  height: 260px;
 }
 
 .icon-plus {

@@ -10,7 +10,7 @@ const NavBar = () => {
   const logout = async () => {
     await axios.post("http://localhost:8800/api/auth/logout");
     dispatch({ type: "LOGOUT_SUCCESS", payload: window.localStorage.clear() });
-    navigation('/login')
+    navigation("/login");
   };
   return (
     <div>
@@ -38,11 +38,7 @@ const NavBar = () => {
             >
               <ul id="nav-parents" className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
-                  <Link
-                    to="/gioithieu"
-                    className="nav-link"
-                    aria-current="page"
-                  >
+                  <Link to="#" className="nav-link" aria-current="page">
                     Giới Thiệu
                   </Link>
                 </li>
@@ -57,17 +53,17 @@ const NavBar = () => {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/doan" className="nav-link">
+                  <Link to="#" className="nav-link" disabled>
                     Đồ Ăn
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/phukien" className="nav-link">
+                  <Link to="#" className="nav-link">
                     Phụ Kiện
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/tintuc" className="nav-link">
+                  <Link to="#" className="nav-link">
                     Tin Tức
                   </Link>
                 </li>

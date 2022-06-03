@@ -29,7 +29,7 @@ mongoose
 app.use(express.json());
 app.use(helmet());
 app.use(
-  cors()
+  cors({ origin: true , credentials :  true})
 );
 app.use(cookieParser());
 

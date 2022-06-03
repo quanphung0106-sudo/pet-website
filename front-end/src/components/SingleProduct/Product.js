@@ -3,8 +3,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ProductDetailContext } from "../HomePage/store/Context";
 import { AuthContext } from "../../context/AuthContext";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Product = ({ user, axiosJWT }) => {
+  const notify = () => toast("Wow so easy!");
   const { PKTT } = useContext(ProductDetailContext);
   const [product, setProduct] = useState([]);
   const location = useLocation();
@@ -20,30 +23,46 @@ const Product = ({ user, axiosJWT }) => {
         setProduct(res.data.productDetail);
       });
   }, [path]);
-  
+
   const handleAddProductToCart = () => {
+    toast.success("1 bé đã được thêm vào giỏ hàng!")
     if (user) {
       try {
         axiosJWT
-          .put(`http://localhost:8800/api/users/cart/${user._id}`, 
-            { productId: product._id, qty }
-          , {
-            headers: { Authorization: user.accessToken }
-          })
+          .put(
+            `http://localhost:8800/api/users/cart/${user._id}`,
+            { productId: product._id, qty },
+            {
+              headers: { Authorization: user.accessToken },
+            }
+          )
           .then((res) => {
             console.log(res);
-            dispatch({ type: "LOGIN_SUCCESS", payload: { ...res.data, accessToken: user.accessToken } });
+            dispatch({
+              type: "LOGIN_SUCCESS",
+              payload: { ...res.data, accessToken: user.accessToken },
+            });
           });
       } catch (err) {
         console.log(err);
       }
     } else {
-      alert('Bạn phải đăng nhập mới sử dụng được tính năng này!')
+      alert("Bạn phải đăng nhập mới sử dụng được tính năng này!");
     }
-
-  }
+  };
   return (
     <div>
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+      />
       <div id="mt-top"></div>
       <div className="container" id="product">
         <div className="row">
@@ -53,7 +72,6 @@ const Product = ({ user, axiosJWT }) => {
               <div className="product-line"></div>
               <div className="product-list">
                 <div className="product-single">
-                  
                   <div className="product-single">
                     {PKTT.map((lists) => (
                       <div className="row">
@@ -108,9 +126,13 @@ const Product = ({ user, axiosJWT }) => {
                     max="5"
                     className="product-input"
                     value={qty}
-                    onChange={e => setQty(e.target.value)}
+                    onChange={(e) => setQty(e.target.value)}
                   />
-                  <button type="button" className="btn btn-success" onClick={handleAddProductToCart}>
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={handleAddProductToCart}
+                  >
                     Thêm vào giỏ hàng
                   </button>
                 </div>

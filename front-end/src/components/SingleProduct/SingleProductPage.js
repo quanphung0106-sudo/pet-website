@@ -4,11 +4,11 @@ import NavBar from "../NavBar";
 import NewestWrite from "./NewestWrite";
 import Product from "./Product";
 
-const SingleProductPage = () => {
+const SingleProductPage = ({user,axiosJWT}) => {
   return (
     <div>
       <NavBar />
-      <Product />
+      <Product user={user} axiosJWT={axiosJWT} />
       <NewestWrite />
       <Footer />
     </div>

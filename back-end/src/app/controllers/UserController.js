@@ -1,6 +1,9 @@
 const { deleteOne } = require("../models/Token");
-const Token = require("../models/Token");
 const User = require("../models/User");
+var ObjectID = require('mongodb').ObjectID;
+const {
+  ObjectId
+} = require('mongodb');
 
 //get all users
 //[GET]: /api/users/
@@ -20,8 +23,42 @@ const updateUser = async (req, res, next) => {
     const user = await User.findByIdAndUpdate(req.params.id, {
       $set: req.body,
     });
-    res.status(200).json("Account has been updated.");
+    res.status(200).json("update user success");
   } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
+//update cart user
+//[PUT]: /api/user/cart/:id
+const updateCartUser = async (req, res, next) => {
+  const { productId, qty } = req.body;
+  try {
+    const user = await User.findOne({ _id: req.params.id });
+
+    const isExisting = user.cart.findIndex(
+      (objInItems) =>
+        objInItems.productId.toString() ===
+        productId,
+    );
+
+    if (isExisting >= 0) {
+        user.cart.forEach((item) => {
+          if (
+            item.productId.toString() ===
+            productId
+          ) {
+            item.qty += Number(qty);
+          }
+        });
+    } else {
+      user.cart.push({ productId: ObjectId(productId), qty: +qty, _id: new ObjectID() });
+    }
+
+    const data = await user.save();
+    res.status(200).json(data);
+  } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 };
@@ -52,4 +89,5 @@ module.exports = {
   updateUser,
   deleteUser,
   deleteAllUsers,
+  updateCartUser
 };

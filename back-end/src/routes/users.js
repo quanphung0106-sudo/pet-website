@@ -6,6 +6,7 @@ const { verifyUser, verifyAdmin } = require("../utils/verifyToken");
 
 router.get("/", verifyAdmin, UserController.getUsers);
 router.put("/:id", verifyUser, UserController.updateUser);
+router.put("/cart/:id", verifyUser, UserController.updateCartUser);
 router.delete("/:id", verifyAdmin, UserController.deleteUser);
 router.delete("/", verifyAdmin, UserController.deleteAllUsers);
 

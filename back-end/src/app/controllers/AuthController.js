@@ -24,6 +24,7 @@ const createUser = async (req, res) => {
         email: req.body.email,
         password: hassPassword,
         acctiveAccount: false,
+        cart: []
       });
       await newUser.save();
       sendConfirmationEmail({ toUser: req.body }, newUser._id);
@@ -65,7 +66,6 @@ const generateRefreshToken = (user) => {
 const userLogin = async (req, res, next) => {
   try {
     const user = await User.findOne({ username: req.body.username });
-    console.log("login user: ", req.body);
     const validPassword = await bcrypt.compare(
       req.body.password,
       user.password
@@ -83,11 +83,7 @@ const userLogin = async (req, res, next) => {
           token: refreshToken,
         });
         await newToken.save();
-
-        console.log({
-          accessToken: accessToken,
-          refreshToken: refreshToken,
-        });
+      
         const { password, isAdmin, acctiveAccount, ...others } = user._doc;
 
         res.cookie("refresh_token", refreshToken, {
@@ -98,6 +94,7 @@ const userLogin = async (req, res, next) => {
           path: "/",
         });
 
+        console.log(accessToken);
         return res.status(200).json({ ...others, accessToken });
       }
     } else {
@@ -121,17 +118,11 @@ const refreshToken = async (req, res, next) => {
       refreshToken,
       process.env.JWT_REFRESH_TOKEN,
       async (err, user) => {
-        console.log("hello user: ", user);
         if (user.id) {
           const tokens = await Token.find({ userId: user.id });
           const isCheckToken = tokens.some(
             (token) => token.token === refreshToken
           );
-
-          console.log({
-            tokens: tokens,
-            refreshToken: refreshToken,
-          });
 
           if (!isCheckToken) {
             return res.status(403).json({ msg: "refresh token is not valid!" });
@@ -214,7 +205,6 @@ const changePassword = async (req, res, next) => {
   const hassPassword = await bcrypt.hash(req.body.password, salt);
   try {
     if (req.body.id) {
-      console.log(req.body.id);
       const user = await User.findOneAndUpdate(
         { _id: req.body.id },
         {

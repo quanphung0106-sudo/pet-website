@@ -35,6 +35,7 @@ const UserSchema = new Schema(
     token: {
       type: String,
     },
+    cart: [{productId: { type: Schema.Types.ObjectId, ref: 'pet' }, qty: {type: Number, default: 1}}]
   },
   {
     timestamps: true,

@@ -2,22 +2,46 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { ProductDetailContext } from "../HomePage/store/Context";
+import { AuthContext } from "../../context/AuthContext";
 
-const Product = () => {
+const Product = ({ user, axiosJWT }) => {
   const { PKTT } = useContext(ProductDetailContext);
-  const [cart, setCats] = useState([]);
+  const [product, setProduct] = useState([]);
   const location = useLocation();
-  console.log(location);
+  const { dispatch } = useContext(AuthContext);
+
+  const [qty, setQty] = useState(1);
   const path = location.pathname.split("/")[2];
 
   useEffect(() => {
     axios
       .get(`http://localhost:8800/pet/cart-product/products_by_id?id=${path}`)
       .then((res) => {
-        setCats(res.data.productDetail);
+        setProduct(res.data.productDetail);
       });
   }, [path]);
-  console.log(cart);
+  
+  const handleAddProductToCart = () => {
+    if (user) {
+      try {
+        axiosJWT
+          .put(`http://localhost:8800/api/users/cart/${user._id}`, 
+            { productId: product._id, qty }
+          , {
+            headers: { Authorization: user.accessToken }
+          })
+          .then((res) => {
+            console.log(res);
+            dispatch({ type: "LOGIN_SUCCESS", payload: { ...res.data, accessToken: user.accessToken } });
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      alert('Bạn phải đăng nhập mới sử dụng được tính năng này!')
+    }
+
+  }
   return (
     <div>
       <div id="mt-top"></div>
@@ -56,17 +80,17 @@ const Product = () => {
             <div className="row">
               <div className="col-xl-4">
                 <div className="img-product" style={{ background: "red" }}>
-                  <img src={cart.image} alt={cart.title} />
+                  <img src={product.image} alt={product.title} />
                 </div>
               </div>
               <div className="col-xl-8">
                 <div className="product-page-content">
                   <span>
-                    Trang Chủ / <i>{cart.type}</i>
+                    Trang Chủ / <i>{product.type}</i>
                   </span>
-                  <h1>{cart.title}</h1>
+                  <h1>{product.title}</h1>
                   <div className="product-line"></div>
-                  <b>{cart.price}đ</b>
+                  <b>{product.price}đ</b>
                   <p>
                     Chó Bully, hay American Bully (Bully Mỹ), giống chó đang lên
                     cơn sốt tại Mỹ, châu Âu, Thái Lan và hiện đã lan tới Việt
@@ -83,8 +107,10 @@ const Product = () => {
                     min="1"
                     max="5"
                     className="product-input"
+                    value={qty}
+                    onChange={e => setQty(e.target.value)}
                   />
-                  <button type="button" className="btn btn-success">
+                  <button type="button" className="btn btn-success" onClick={handleAddProductToCart}>
                     Thêm vào giỏ hàng
                   </button>
                 </div>

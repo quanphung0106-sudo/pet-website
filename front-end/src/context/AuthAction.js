@@ -15,3 +15,11 @@ export const saveNewAccessToken = (token) => ({
   type: "SAVE_NEW_ACCESS_TOKEN",
   payload: token,
 });
+
+export const setLoadingActive = () => ({
+  type: "LOADING_ACTIVE",
+});
+
+export const setLoadingUnActive = () => ({
+  type: "LOADING_UNACTIVE",
+});

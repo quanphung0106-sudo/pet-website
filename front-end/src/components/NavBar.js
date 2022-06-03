@@ -1,14 +1,16 @@
 import axios from "axios";
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/img/Logo.jpg";
 import { AuthContext } from "../context/AuthContext";
 
 const NavBar = () => {
   const { user, dispatch } = useContext(AuthContext);
+  const navigation = useNavigate();
   const logout = async () => {
     await axios.post("http://localhost:8800/api/auth/logout");
     dispatch({ type: "LOGOUT_SUCCESS", payload: window.localStorage.clear() });
+    navigation('/login')
   };
   return (
     <div>
@@ -155,7 +157,7 @@ const NavBar = () => {
                     <i className="fas fa-shopping-cart cart-icon"></i>
                   </Link>
                   <span className="cart-quantity">
-                    <b>5</b>
+                    <b>{user?.cart.length}</b>
                   </span>
                 </li>
               </ul>

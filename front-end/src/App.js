@@ -22,8 +22,8 @@ import "./assets/css/Banner.css";
 import "./assets/css/Information.css";
 import "./assets/css/Responsive.css";
 import "./assets/css/PageProductSingle/Product.css";
-import SingleProductPage from "./components/SingleProduct/SingleProductPage";
 
+import SingleProductPage from "./components/SingleProduct/SingleProductPage";
 import CatPage from "./pages/dogAndcatPage/CatPage";
 import DogPage from "./pages/dogAndcatPage/DogPage";
 import Doan from "./pages/doan/Doan";
@@ -31,6 +31,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
 import ProductDetailState from "./components/HomePage/store/ProductDetail/ProductDetailState";
+import Cart from "./pages/Cart";
 
 function App() {
   const { user, dispatch } = useContext(AuthContext);
@@ -82,15 +83,16 @@ function App() {
         <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
         <Route path="/reset-password" element={<ForgotPassword />} />
         <Route path="/reset/:id" element={<Reset />} />
-        <Route path="/lienhe" element={<CSKH/>} />
+        <Route path="/lienhe" element={<CSKH />} />
         <Route
           path="/register"
           element={user ? <Navigate to="/" /> : <Register />}
         />
-        <Route exact path="/chocanh/:id" element={<SingleProductPage />} />
+        <Route exact path="/chocanh/:id" element={<SingleProductPage user={user} axiosJWT={axiosJWT} />} />
         <Route path="/api/auth/active-account" element={<AlertSuccess />} />
         <Route path="/api/auth/reset-password" element={<ResetSuccess />} />
-        <Route path="/meocanh" element={<CatPage />} />
+        <Route path="/cart" element={<Cart axiosJWT={axiosJWT} user={user} />} />
+        <Route path="/meocanh" element={<CatPage user={user} />} />
         <Route path="/chocanh" element={<DogPage />} />
         <Route path="/doan" element={<Doan axiosJWT={axiosJWT} />} />
       </Routes>
